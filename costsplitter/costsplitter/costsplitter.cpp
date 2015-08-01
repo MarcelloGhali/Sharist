@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Ocasion.h"
+#include "SharedEvent.h"
 
 void print(double ** results, int n){
 	for (int i = 0; i < n; i++)
@@ -19,7 +19,7 @@ void print(double ** results, int n){
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int n = 4;
-	Ocasion ocasion(n);
+	SharedEvent ocasion();
 	/*int gasExpense[3] = { 1, 0, 1 };
 	int foodExpense[3] = { 0, 1, 1 };
 	ExpenseItem gas(90, 0, gasExpense);
@@ -33,8 +33,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	set[2] = new double[n]{30, 33, 0, 0};
 	set[3] = new double[n]{30, 33, 10, 0};
 
-	double** result = ocasion.Optimize(set);
-	print(result, n);
+	/*double** result = ocasion.Optimize(set);
+	print(result, n);*/
 	return 0;
 }
 

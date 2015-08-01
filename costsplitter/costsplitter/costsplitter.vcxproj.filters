@@ -27,7 +27,10 @@
     <ClInclude Include="ExpenseItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ocasion.h">
+    <ClInclude Include="SharedEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Member.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,7 +44,10 @@
     <ClCompile Include="ExpenseItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ocasion.cpp">
+    <ClCompile Include="SharedEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Member.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
