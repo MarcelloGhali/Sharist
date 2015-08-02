@@ -16,10 +16,10 @@ void print(double ** results, int n){
 	}
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, const char * argv[])
 {
 	int n = 4;
-	SharedEvent ocasion();
+	//SharedEvent ocasion();
 	/*int gasExpense[3] = { 1, 0, 1 };
 	int foodExpense[3] = { 0, 1, 1 };
 	ExpenseItem gas(90, 0, gasExpense);

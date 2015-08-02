@@ -137,8 +137,8 @@ double** SharedEvent::Optimize(){
 		}
 
 		if (sI > -1 && lI > -1){
-			if (abs(balanceVector[lI]) > abs(balanceVector[sI])){
-				optimizedMap[sI][lI] = abs(balanceVector[sI]);
+            if (abs(balanceVector[lI]) > abs(balanceVector[sI])){
+                optimizedMap[sI][lI] = abs(balanceVector[sI]);
 				balanceVector[lI] += balanceVector[sI];
 				balanceVector[sI] = 0;
 			}
