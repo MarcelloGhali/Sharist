@@ -2,8 +2,9 @@
 #include "Member.h"
 
 
-Member::Member()
+Member::Member(string name)
 {
+	this->Name = name;
 }
 
 

@@ -4,7 +4,7 @@
 class Member
 {
 public:
-	Member();
+	Member(string name);
 	~Member();
 	string Name;
 };

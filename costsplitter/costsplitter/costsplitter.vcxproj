@@ -86,7 +86,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="costsplitter.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Member.cpp" />
     <ClCompile Include="SharedEvent.cpp" />
     <ClCompile Include="ExpenseItem.cpp" />
