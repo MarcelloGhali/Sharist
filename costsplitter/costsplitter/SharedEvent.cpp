@@ -5,14 +5,9 @@ void SharedEvent::Print(){
 	for (int i = 0; i < this->lastMemberOrder; i++){
 		for (int j = 0; j < this->lastMemberOrder; j++){
 			if (optimizedMap[i][j] == 0) continue;
-			string first = this->findMember(i)->Name;
-			string second = this->findMember(j)->Name;
-			cout << first << " owes " << second << ": " << optimizedMap[i][j] << "\n";
+			printf("%s owes %s: %f \n", this->findMember(i)->Name.c_str(), this->findMember(j)->Name.c_str(), optimizedMap[i][j]);
 		}
 	}
-
-	printf("\n");
-	printf("\n");
 }
 
 const Member* SharedEvent::findMember(int index){
