@@ -1,20 +1,26 @@
 ﻿#include "stdafx.h"
 #include "SharedEvent.h"
 
-void SharedEvent::print(double** input, int i, int j){
-	printf("%d %d \n", i, j);
-	for (int i = 0; i < this->size; i++)
-	{
-		for (int j = 0; j < this->size; j++)
-		{
-			std::cout << expenseMap[i][j] << " ";
+void SharedEvent::Print(){
+	for (int i = 0; i < this->lastMemberOrder; i++){
+		for (int j = 0; j < this->lastMemberOrder; j++){
+			if (optimizedMap[i][j] == 0) continue;
+			string first = this->findMember(i)->Name;
+			string second = this->findMember(j)->Name;
+			cout << first << " owes " << second << ": " << optimizedMap[i][j] << "\n";
 		}
-
-		printf("\n");
 	}
 
 	printf("\n");
 	printf("\n");
+}
+
+const Member* SharedEvent::findMember(int index){
+	for (map<const Member*, int>::iterator it = this->membersMap.begin(); it != this->membersMap.end(); it++){
+		if (it->second == index){
+			return it->first;
+		}
+	}
 }
 
 double* SharedEvent::initVector(int n){
@@ -74,6 +80,7 @@ SharedEvent::~SharedEvent()
 }
 
 void SharedEvent::AddExpenseItem(const ExpenseItem* item){
+	expenseItems.push_back(item);
 	//TODO:we currently don't support members in a group
 	int splitNumber = item->paid->size() + 1;
 	double share = item->cost / splitNumber;
@@ -89,6 +96,12 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 		int paidForMemberIndex = membersMap[*it];
 		this->expenseMap[paidForMemberIndex][ownerIndex] += share;
 	}
+}
+
+//TODO:implement expense item removal
+void SharedEvent::RemoveExpenseItem(const ExpenseItem* item){
+	vector<const ExpenseItem*>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
+	expenseItems.erase(pos);
 }
 
 //TODO:implememnt remove member 
@@ -108,50 +121,46 @@ double** SharedEvent::Optimize(double** input){
 
 double** SharedEvent::Optimize(){
 	//calculating balance vector
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
+	for (int i = 0; i < size; i++){
+		for (int j = 0; j < size; j++){
 			balanceVector[i] += expenseMap[j][i] - expenseMap[i][j];
 		}
 	}
 
 	//optimizing
-	int sI = -1, lI = -1;
+	int negativeI = -1, positiveI = -1;
 	while (true){
 		//geting the <0 number
-		for (int i = 0; i < size; i++)
-		{
+		for (int i = 0; i < size; i++){
 			if (balanceVector[i] < 0){
-				sI = i;
+				negativeI = i;
 				break;
 			}
 		}
 
 		//getting the >0 number
-		for (int i = 0; i < size; i++)
-		{
+		for (int i = 0; i < size; i++){
 			if (balanceVector[i] > 0){
-				lI = i;
+				positiveI = i;
 				break;
 			}
 		}
 
-		if (sI > -1 && lI > -1){
-			if (abs(balanceVector[lI]) > abs(balanceVector[sI])){
-				optimizedMap[sI][lI] = abs(balanceVector[sI]);
-				balanceVector[lI] += balanceVector[sI];
-				balanceVector[sI] = 0;
+		if (negativeI > -1 && positiveI > -1){
+			if (abs(balanceVector[positiveI]) > abs(balanceVector[negativeI])){
+				optimizedMap[negativeI][positiveI] = abs(balanceVector[negativeI]);
+				balanceVector[positiveI] += balanceVector[negativeI];
+				balanceVector[negativeI] = 0;
 			}
 			else{
-				optimizedMap[sI][lI] = balanceVector[lI];
-				balanceVector[sI] += balanceVector[lI];
-				balanceVector[lI] = 0;
+				optimizedMap[negativeI][positiveI] = balanceVector[positiveI];
+				balanceVector[negativeI] += balanceVector[positiveI];
+				balanceVector[positiveI] = 0;
 			}
 		}
 		else break;
 
-		sI = -1, lI = -1;
+		negativeI = -1, positiveI = -1;
 	}
 
 	return optimizedMap;

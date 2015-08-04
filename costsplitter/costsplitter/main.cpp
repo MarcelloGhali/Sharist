@@ -36,16 +36,8 @@ int main(int argc, const char * argv[])
 	oregon->AddMember(slava);
 	oregon->AddExpenseItem(gas);
 	oregon->AddExpenseItem(food);
-	double** result = oregon->Optimize();
-	print(result, 10);
-	//double** set = new double*[n];
-	//set[0] = new double[n]{0, 33, 10, 0};
-	//set[1] = new double[n]{30, 0, 10, 0};
-	//set[2] = new double[n]{30, 33, 0, 0};
-	//set[3] = new double[n]{30, 33, 10, 0};
-
-	/*double** result = ocasion.Optimize(set);
-	print(result, n);*/
+	oregon->Optimize();
+	oregon->Print();
 	return 0;
 }
 
