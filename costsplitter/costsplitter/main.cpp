@@ -18,7 +18,6 @@ void print(double ** results, int n){
 
 int main(int argc, const char * argv[])
 {
-	int n = 4;
 	Member* marat = new Member("Marat");
 	Member* alex = new Member("Alex");
 	Member* slava = new Member("Slava");
