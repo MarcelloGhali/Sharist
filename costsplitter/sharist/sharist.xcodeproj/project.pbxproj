@@ -28,16 +28,16 @@
 
 /* Begin PBXFileReference section */
 		2F08F2831B6D854700A564AE /* sharist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sharist; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F08F28D1B6D858500A564AE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../costsplitter/main.cpp; sourceTree = "<group>"; };
-		2F08F28E1B6D858500A564AE /* ExpenseItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExpenseItem.cpp; path = ../../costsplitter/ExpenseItem.cpp; sourceTree = "<group>"; };
-		2F08F28F1B6D858500A564AE /* ExpenseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpenseItem.h; path = ../../costsplitter/ExpenseItem.h; sourceTree = "<group>"; };
-		2F08F2901B6D858500A564AE /* Member.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Member.cpp; path = ../../costsplitter/Member.cpp; sourceTree = "<group>"; };
-		2F08F2911B6D858500A564AE /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Member.h; path = ../../costsplitter/Member.h; sourceTree = "<group>"; };
-		2F08F2921B6D858500A564AE /* SharedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SharedEvent.cpp; path = ../../costsplitter/SharedEvent.cpp; sourceTree = "<group>"; };
-		2F08F2931B6D858500A564AE /* SharedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedEvent.h; path = ../../costsplitter/SharedEvent.h; sourceTree = "<group>"; };
-		2F08F2941B6D858500A564AE /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../costsplitter/stdafx.cpp; sourceTree = "<group>"; };
-		2F08F2951B6D858500A564AE /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../costsplitter/stdafx.h; sourceTree = "<group>"; };
-		2F08F2961B6D858500A564AE /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = targetver.h; path = ../../costsplitter/targetver.h; sourceTree = "<group>"; };
+		2F08F28D1B6D858500A564AE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../costsplitter/main.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F28E1B6D858500A564AE /* ExpenseItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExpenseItem.cpp; path = ../costsplitter/ExpenseItem.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F28F1B6D858500A564AE /* ExpenseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpenseItem.h; path = ../costsplitter/ExpenseItem.h; sourceTree = SOURCE_ROOT; };
+		2F08F2901B6D858500A564AE /* Member.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Member.cpp; path = ../costsplitter/Member.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F2911B6D858500A564AE /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Member.h; path = ../costsplitter/Member.h; sourceTree = SOURCE_ROOT; };
+		2F08F2921B6D858500A564AE /* SharedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SharedEvent.cpp; path = ../costsplitter/SharedEvent.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F2931B6D858500A564AE /* SharedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedEvent.h; path = ../costsplitter/SharedEvent.h; sourceTree = SOURCE_ROOT; };
+		2F08F2941B6D858500A564AE /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../costsplitter/stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F2951B6D858500A564AE /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../costsplitter/stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		2F08F2961B6D858500A564AE /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = targetver.h; path = ../costsplitter/targetver.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,10 +72,10 @@
 			children = (
 				2F08F29C1B6D859F00A564AE /* Headers */,
 				2F08F28D1B6D858500A564AE /* main.cpp */,
+				2F08F2951B6D858500A564AE /* stdafx.cpp */,
 				2F08F28E1B6D858500A564AE /* ExpenseItem.cpp */,
 				2F08F2901B6D858500A564AE /* Member.cpp */,
 				2F08F2921B6D858500A564AE /* SharedEvent.cpp */,
-				2F08F2931B6D858500A564AE /* SharedEvent.h */,
 				2F08F2941B6D858500A564AE /* stdafx.cpp */,
 			);
 			path = sharist;
@@ -84,9 +84,9 @@
 		2F08F29C1B6D859F00A564AE /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				2F08F2931B6D858500A564AE /* SharedEvent.h */,
 				2F08F28F1B6D858500A564AE /* ExpenseItem.h */,
 				2F08F2911B6D858500A564AE /* Member.h */,
-				2F08F2951B6D858500A564AE /* stdafx.h */,
 				2F08F2961B6D858500A564AE /* targetver.h */,
 			);
 			name = Headers;
@@ -269,6 +269,7 @@
 				2F08F28C1B6D854700A564AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

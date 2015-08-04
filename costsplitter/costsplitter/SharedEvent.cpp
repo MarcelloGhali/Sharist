@@ -16,6 +16,8 @@ const Member* SharedEvent::findMember(int index){
 			return it->first;
 		}
 	}
+    
+    return 0;
 }
 
 double* SharedEvent::initVector(int n){
