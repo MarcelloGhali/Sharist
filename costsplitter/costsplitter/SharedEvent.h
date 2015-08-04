@@ -12,7 +12,9 @@ private:
 	//TODO:add growth
 	int size = 10;
 	const double growthCoefficient = 0.5;
+	//TODO:make expandable
 	double** expenseMap, ** optimizedMap;
+	//TODO:make expandable
 	double* balanceVector;
 	double** initMatrix(int n);
 	double* initVector(int n);

@@ -8,6 +8,15 @@ void SharedEvent::Print(){
 			printf("%s owes %s: %f \n", this->findMember(i)->Name.c_str(), this->findMember(j)->Name.c_str(), optimizedMap[i][j]);
 		}
 	}
+
+	double totalSpent = 0;
+	double totalOwe = 0;
+	for (int i = 0; i < size; i++){
+		if (balanceVector[i] < 0) totalOwe += balanceVector[i];
+		else totalSpent += balanceVector[i];
+	}
+
+	printf("Total spent: %f\nTotal debt: %f", totalSpent, totalOwe);
 }
 
 const Member* SharedEvent::findMember(int index){
@@ -16,19 +25,19 @@ const Member* SharedEvent::findMember(int index){
 			return it->first;
 		}
 	}
-    
-    return 0;
+
+	return 0;
 }
 
 double* SharedEvent::initVector(int n){
-	balanceVector = new double[n];
+	double* toReturn = new double[n];
 	// basic init of the map
 	for (int i = 0; i < n; i++)
 	{
-		balanceVector[i] = 0;
+		toReturn[i] = 0;
 	}
 
-	return balanceVector;
+	return toReturn;
 }
 
 double** SharedEvent::initMatrix(int size){
@@ -124,12 +133,14 @@ double** SharedEvent::Optimize(){
 		}
 	}
 
+	double* balanceVectorCpy = initVector(size);
+	memcpy(balanceVectorCpy, balanceVector, size*sizeof(balanceVector));
 	//optimizing
 	int negativeI = -1, positiveI = -1;
 	while (true){
 		//geting the <0 number
 		for (int i = 0; i < size; i++){
-			if (balanceVector[i] < 0){
+			if (balanceVectorCpy[i] < 0){
 				negativeI = i;
 				break;
 			}
@@ -137,22 +148,22 @@ double** SharedEvent::Optimize(){
 
 		//getting the >0 number
 		for (int i = 0; i < size; i++){
-			if (balanceVector[i] > 0){
+			if (balanceVectorCpy[i] > 0){
 				positiveI = i;
 				break;
 			}
 		}
 
 		if (negativeI > -1 && positiveI > -1){
-			if (abs(balanceVector[positiveI]) > abs(balanceVector[negativeI])){
-				optimizedMap[negativeI][positiveI] = abs(balanceVector[negativeI]);
-				balanceVector[positiveI] += balanceVector[negativeI];
-				balanceVector[negativeI] = 0;
+			if (abs(balanceVectorCpy[positiveI]) > abs(balanceVectorCpy[negativeI])){
+				optimizedMap[negativeI][positiveI] = abs(balanceVectorCpy[negativeI]);
+				balanceVectorCpy[positiveI] += balanceVectorCpy[negativeI];
+				balanceVectorCpy[negativeI] = 0;
 			}
 			else{
-				optimizedMap[negativeI][positiveI] = balanceVector[positiveI];
-				balanceVector[negativeI] += balanceVector[positiveI];
-				balanceVector[positiveI] = 0;
+				optimizedMap[negativeI][positiveI] = balanceVectorCpy[positiveI];
+				balanceVectorCpy[negativeI] += balanceVectorCpy[positiveI];
+				balanceVectorCpy[positiveI] = 0;
 			}
 		}
 		else break;
@@ -160,5 +171,6 @@ double** SharedEvent::Optimize(){
 		negativeI = -1, positiveI = -1;
 	}
 
+	delete[] balanceVectorCpy;
 	return optimizedMap;
 }
