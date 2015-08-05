@@ -9,17 +9,16 @@ private:
 	vector<const ExpenseItem*> expenseItems;
 	map<const Member*, int> membersMap;
 	int lastMemberOrder;
-	//TODO:add growth
 	int size = 10;
 	const double growthCoefficient = 0.5;
-	//TODO:make expandable
 	double** expenseMap, ** optimizedMap;
-	//TODO:make expandable
 	double* balanceVector;
 	double** initMatrix(int n);
 	double* initVector(int n);
 	bool areNewPeopleAdded(const ExpenseItem* item);
 	const Member* findMember(int index);
+	void Expand();
+	void Dispose();
 public:
 	SharedEvent();
 	void RemoveExpenseItem(const ExpenseItem* item);
