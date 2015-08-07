@@ -10,7 +10,7 @@ private:
 	map<const Member*, int> membersMap;
 	int lastMemberOrder;
 	int size = 10;
-	const double growthCoefficient = 0.5;
+	const double growthCoefficient = 2;
 	double** expenseMap, ** optimizedMap;
 	double* balanceVector;
 	double** initMatrix(int n);
@@ -25,6 +25,8 @@ public:
 	void AddExpenseItem(const ExpenseItem* item);
 	void AddMember(const Member* newMember);
 	void RemoveMember(const Member* memberToRemove);
+	int GetCapacity();
+	int GetGrowthRate();
 	double** Optimize();
 	double** Optimize(double** input);
 	void Print();

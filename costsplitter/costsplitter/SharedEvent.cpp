@@ -103,6 +103,14 @@ SharedEvent::~SharedEvent(){
 	Dispose();
 }
 
+int SharedEvent::GetCapacity(){
+	return this->size;
+}
+
+int SharedEvent::GetGrowthRate(){
+	return this->growthCoefficient;
+}
+
 void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 	expenseItems.push_back(item);
 	// TODO : we currently don't support members in a group
