@@ -5,20 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7A7A0476-A5B0-456C-88E2-528475DFF533</string>
+	<string>BB04E887-D268-46EA-AC05-E65E2D313D14</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>sharist</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F134AC300829198B700406BE447F83AB49B699FA</key>
 		<string>https://github.com/MarcelloGhali/testRepo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>costsplitter/sharist/sharist.xcodeproj/project.xcworkspace</string>
+	<string>costsplitter/sharist.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F134AC300829198B700406BE447F83AB49B699FA</key>
-		<string>../../../..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/MarcelloGhali/testRepo.git</string>

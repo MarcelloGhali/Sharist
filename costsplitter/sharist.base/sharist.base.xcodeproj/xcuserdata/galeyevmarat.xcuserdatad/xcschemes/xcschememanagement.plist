@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>sharist.xcscheme</key>
+		<key>sharist.base.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2F08F2821B6D854700A564AE</key>
+		<key>2F32E8011B768AB6003188B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

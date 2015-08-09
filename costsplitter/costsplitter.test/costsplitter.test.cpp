@@ -3,8 +3,11 @@
 
 #include "stdafx.h"
 #include "SharedEvent.h"
+#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE MyTest
 #include "boost/test/unit_test.hpp"
+
+BOOST_AUTO_TEST_SUITE(core)
 
 BOOST_AUTO_TEST_CASE(sharedevent_should_expand_if_new_members_added){
 	Member* marat = new Member("Marat");
@@ -19,7 +22,7 @@ BOOST_AUTO_TEST_CASE(sharedevent_should_expand_if_new_members_added){
 	oregon->AddMember(alex);
 	oregon->AddMember(slava);
 	oregon->AddExpenseItem(gas);
-	double **results = oregon->Optimize();
+	oregon->Optimize();
 	int countResults = oregon->GetCapacity();
 	//adding new users
 	vector<const Member*>* tmpMembers = new vector<const Member*>();
@@ -29,7 +32,7 @@ BOOST_AUTO_TEST_CASE(sharedevent_should_expand_if_new_members_added){
 		oregon->AddMember(tmpMember);
 	}
 	//check
-	double **expandedResults = oregon->Optimize();
+	oregon->Optimize();
 	int countExpandedResults = oregon->GetCapacity();
 	BOOST_CHECK(countResults*oregon->GetGrowthRate() == countExpandedResults);
 	//cleanup
@@ -39,3 +42,5 @@ BOOST_AUTO_TEST_CASE(sharedevent_should_expand_if_new_members_added){
 
 	delete tmpMembers;
 }
+
+BOOST_AUTO_TEST_SUITE_END()

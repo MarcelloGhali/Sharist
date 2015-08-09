@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2F08F2821B6D854700A564AE"
-               BuildableName = "sharist"
-               BlueprintName = "sharist"
-               ReferencedContainer = "container:sharist.xcodeproj">
+               BlueprintIdentifier = "2F32E8011B768AB6003188B1"
+               BuildableName = "libsharist.base.a"
+               BlueprintName = "sharist.base"
+               ReferencedContainer = "container:sharist.base.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2F08F2821B6D854700A564AE"
-            BuildableName = "sharist"
-            BlueprintName = "sharist"
-            ReferencedContainer = "container:sharist.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,16 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2F08F2821B6D854700A564AE"
-            BuildableName = "sharist"
-            BlueprintName = "sharist"
-            ReferencedContainer = "container:sharist.xcodeproj">
+            BlueprintIdentifier = "2F32E8011B768AB6003188B1"
+            BuildableName = "libsharist.base.a"
+            BlueprintName = "sharist.base"
+            ReferencedContainer = "container:sharist.base.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -67,16 +57,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2F08F2821B6D854700A564AE"
-            BuildableName = "sharist"
-            BlueprintName = "sharist"
-            ReferencedContainer = "container:sharist.xcodeproj">
+            BlueprintIdentifier = "2F32E8011B768AB6003188B1"
+            BuildableName = "libsharist.base.a"
+            BlueprintName = "sharist.base"
+            ReferencedContainer = "container:sharist.base.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
