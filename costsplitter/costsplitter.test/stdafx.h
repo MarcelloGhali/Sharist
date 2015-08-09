@@ -8,7 +8,7 @@
 #include "targetver.h"
 
 #include <stdio.h>
-
+#define BOOST_ALL_DYN_LINK
 
 
 

@@ -20,45 +20,9 @@ void SharedEvent::Print(){
 }
 
 void SharedEvent::Dispose(){
-	for (int i = 0; i < size; i++){
-		delete[] this->expenseMap[i];
-		delete[] this->optimizedMap[i];
-	}
-
 	delete[] this->balanceVector;
 	delete[] this->expenseMap;
 	delete[] this->optimizedMap;
-}
-
-void SharedEvent::Expand(){
-	int newSize = size * growthCoefficient;
-	double** newExpenseMap, **newOptimizedMap;
-	double* newBalanceVector;
-	//init
-	newExpenseMap = initMatrix(newSize);
-	newOptimizedMap = initMatrix(newSize);
-	newBalanceVector = initVector(newSize);
-	//copy
-	memcpy(newExpenseMap, expenseMap, size*sizeof(expenseMap));
-	memcpy(newOptimizedMap, optimizedMap, size*sizeof(optimizedMap));
-	memcpy(newBalanceVector, balanceVector, size*sizeof(balanceVector));
-	//recycle
-	Dispose();
-	//swap
-	expenseMap = newExpenseMap;
-	optimizedMap = newOptimizedMap;
-	balanceVector = newBalanceVector;
-	size = newSize;
-}
-
-const Member* SharedEvent::findMember(int index){
-	for (map<const Member*, int>::iterator it = this->membersMap.begin(); it != this->membersMap.end(); it++){
-		if (it->second == index){
-			return it->first;
-		}
-	}
-
-	return 0;
 }
 
 double* SharedEvent::initVector(int n){
@@ -86,21 +50,57 @@ double** SharedEvent::initMatrix(int size){
 	}
 
 	return toReturn;
-}
 
-bool SharedEvent::areNewPeopleAdded(const ExpenseItem* item){
-	return true;
 }
-
 SharedEvent::SharedEvent(){
 	expenseMap = initMatrix(size);
 	optimizedMap = initMatrix(size);
 	balanceVector = initVector(size);
+	expenseItems = new vector<const ExpenseItem*>();
+	membersMap = new map<const Member*, int>();
 	lastMemberOrder = 0;
 }
 
 SharedEvent::~SharedEvent(){
 	Dispose();
+
+	delete this->membersMap;
+	delete this->expenseItems;
+}
+
+void SharedEvent::Expand(){
+	int newSize = size * growthCoefficient;
+	double** newExpenseMap, **newOptimizedMap;
+	double* newBalanceVector;
+	//init
+	newExpenseMap = initMatrix(newSize);
+	newOptimizedMap = initMatrix(newSize);
+	newBalanceVector = initVector(newSize);
+	//copy
+	memcpy(newExpenseMap, expenseMap, size*sizeof(expenseMap));
+	memcpy(newOptimizedMap, optimizedMap, size*sizeof(optimizedMap));
+	memcpy(newBalanceVector, balanceVector, size*sizeof(balanceVector));
+	//recycle
+	Dispose();
+	//swap
+	expenseMap = newExpenseMap;
+	optimizedMap = newOptimizedMap;
+	balanceVector = newBalanceVector;
+	size = newSize;
+}
+
+const Member* SharedEvent::findMember(int index){
+	for (map<const Member*, int>::iterator it = this->membersMap->begin(); it != this->membersMap->end(); it++){
+		if (it->second == index){
+			return it->first;
+		}
+	}
+
+	return 0;
+}
+
+bool SharedEvent::areNewPeopleAdded(const ExpenseItem* item){
+	return true;
 }
 
 int SharedEvent::GetCapacity(){
@@ -112,7 +112,7 @@ int SharedEvent::GetGrowthRate(){
 }
 
 void SharedEvent::AddExpenseItem(const ExpenseItem* item){
-	expenseItems.push_back(item);
+	expenseItems->push_back(item);
 	// TODO : we currently don't support members in a group
 	int splitNumber = item->paid->size() + 1;
 	double share = item->cost / splitNumber;
@@ -122,22 +122,22 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 	}
 
 	// TODO: validation
-	int ownerIndex = membersMap[item->owner];
+	int ownerIndex = membersMap->operator[](item->owner);
 	for (vector<const Member*>::iterator it = item->paid->begin(); it < item->paid->end(); it++){
-		int paidForMemberIndex = membersMap[*it];
+		int paidForMemberIndex = membersMap->operator[](*it);
 		this->expenseMap[paidForMemberIndex][ownerIndex] += share;
 	}
 }
 
 //TODO:implement expense item removal
 void SharedEvent::RemoveExpenseItem(const ExpenseItem* item){
-	vector<const ExpenseItem*>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
-	expenseItems.erase(pos);
+	vector<const ExpenseItem*>::iterator pos = find(this->expenseItems->begin(), this->expenseItems->end(), item);
+	expenseItems->erase(pos);
 }
 
 //TODO:implememnt remove member 
 void SharedEvent::RemoveMember(const Member* memberToRemove){
-	membersMap.erase(memberToRemove);
+	membersMap->erase(memberToRemove);
 }
 
 void SharedEvent::AddMember(const Member* newMember){
@@ -147,7 +147,7 @@ void SharedEvent::AddMember(const Member* newMember){
 		Expand();
 	}
 
-	membersMap.insert(std::pair<const Member*, int>(newMember, lastMemberOrder++));
+	membersMap->insert(std::pair<const Member*, int>(newMember, lastMemberOrder++));
 }
 
 double** SharedEvent::Optimize(double** input){

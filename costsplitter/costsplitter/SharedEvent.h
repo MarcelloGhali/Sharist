@@ -6,8 +6,8 @@
 class SharedEvent
 {
 private:
-	vector<const ExpenseItem*> expenseItems;
-	map<const Member*, int> membersMap;
+	vector<const ExpenseItem*>* expenseItems;
+	map<const Member*, int>* membersMap;
 	int lastMemberOrder;
 	int size = 10;
 	const double growthCoefficient = 2;

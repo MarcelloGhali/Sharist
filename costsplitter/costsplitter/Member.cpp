@@ -2,12 +2,10 @@
 #include "Member.h"
 
 
-Member::Member(string name)
-{
+Member::Member(string name){
 	this->Name = name;
 }
 
 
-Member::~Member()
-{
+Member::~Member(){
 }
