@@ -15,7 +15,7 @@ CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefau
 DEFINES       = -DSRCDIR=\"/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/tests/Core_Test/\" -DQT_TESTLIB_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR='"/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/build-Sharist-Desktop_Qt_5_5_0_clang_64bit-Debug/tests/Core_Test"'
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -mmacosx-version-min=10.7 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../../../Sharist/tests/Core_Test -I. -I../../../Sharist/src/core -I/Applications/Qt/5.5/clang_64/lib/QtTest.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Qt/5.5/clang_64/mkspecs/macx-clang -F/Applications/Qt/5.5/clang_64/lib
+INCPATH       = -I../../../Sharist/tests/Core_Test -I. -I../../../Sharist/src/core -I../../../Sharist/src/core -I/Applications/Qt/5.5/clang_64/lib/QtTest.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Qt/5.5/clang_64/mkspecs/macx-clang -F/Applications/Qt/5.5/clang_64/lib
 QMAKE         = /Applications/Qt/5.5/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -576,7 +576,7 @@ tst_core_testtest.moc: /Applications/Qt/5.5/clang_64/lib/QtCore.framework/Header
 		../../../Sharist/src/core/targetver.h \
 		../../../Sharist/src/core/Member.h \
 		../../../Sharist/tests/Core_Test/tst_core_testtest.cpp
-	/Applications/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Applications/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/tests/Core_Test -I/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/src/core -I/Applications/Qt/5.5/clang_64/lib/QtTest.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Applications/Qt/5.5/clang_64/lib ../../../Sharist/tests/Core_Test/tst_core_testtest.cpp -o tst_core_testtest.moc
+	/Applications/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Applications/Qt/5.5/clang_64/mkspecs/macx-clang -I/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/tests/Core_Test -I/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/src/core -I/Users/galeyevmarat/src/testRepo/costsplitter/coststplitter.qt/Sharist/src/core -I/Applications/Qt/5.5/clang_64/lib/QtTest.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Applications/Qt/5.5/clang_64/lib ../../../Sharist/tests/Core_Test/tst_core_testtest.cpp -o tst_core_testtest.moc
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
