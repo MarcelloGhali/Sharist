@@ -131,7 +131,7 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 
 //TODO:implement expense item removal
 void SharedEvent::RemoveExpenseItem(const ExpenseItem* item){
-	vector<const ExpenseItem*>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
+    vector<const ExpenseItem*>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
 	expenseItems.erase(pos);
 }
 
