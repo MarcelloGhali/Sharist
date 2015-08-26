@@ -42,7 +42,9 @@ void Core_Test::sharedevent_should_expand_if_new_members_added()
         oregon.AddMember(tmpMember);
     }
     //check
+    //oregon.Print();
     oregon.Optimize();
+    //oregon.Print();
     int countExpandedResults = oregon.GetCapacity();
     QVERIFY(countResults*oregon.GetGrowthRate()==countExpandedResults);
     //cleanup
@@ -74,10 +76,10 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
         double alexOweSlava = 50;
         double alexOweMarat = 20;
         //test
-        double** results = oregon.Optimize();
+        double* results = oregon.Optimize();
         //adding new users
-        QVERIFY(results[1][0] == alexOweMarat);
-        QVERIFY(results[1][2] == alexOweSlava);
+        QVERIFY(results[1*10 + 0] == alexOweMarat);
+        QVERIFY(results[1*10 + 2] == alexOweSlava);
 }
 
 QTEST_APPLESS_MAIN(Core_Test)

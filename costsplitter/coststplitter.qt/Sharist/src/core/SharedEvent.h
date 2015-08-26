@@ -6,19 +6,18 @@
 class SharedEvent
 {
 private:
-	vector<const ExpenseItem*> expenseItems;
+    vector<const ExpenseItem*> expenseItems;
 	map<const Member*, int> membersMap;
 	int lastMemberOrder;
 	int size = 10;
 	const double growthCoefficient = 2;
-	double** expenseMap, ** optimizedMap;
-	double* balanceVector;
-	double** initMatrix(int n);
-	double* initVector(int n);
+    double* expenseMap, *optimizedMap;
+    double* balanceVector;
+    double* initVector(int n);
 	bool areNewPeopleAdded(const ExpenseItem* item);
 	const Member* findMember(int index);
-	void Expand();
-	void Dispose();
+    void expand();
+    void dispose();
 public:
 	SharedEvent();
 	void RemoveExpenseItem(const ExpenseItem* item);
@@ -27,8 +26,8 @@ public:
 	void RemoveMember(const Member* memberToRemove);
 	int GetCapacity();
 	int GetGrowthRate();
-	double** Optimize();
-	double** Optimize(double** input);
+    double* Optimize();
+    double* Optimize(double* input);
 	void Print();
 	~SharedEvent();
 };
