@@ -1,6 +1,5 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "Member.h"
-
 
 Member::Member(string name)
 {

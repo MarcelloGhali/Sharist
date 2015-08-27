@@ -1,6 +1,9 @@
-#pragma once
-#include "stdafx.h"
+//#pragma once
+//#include "stdafx.h"
+#include <vector>
 #include "Member.h"
+
+using namespace::std;
 
 class ExpenseItem
 {

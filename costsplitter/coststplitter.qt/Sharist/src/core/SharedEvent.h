@@ -1,7 +1,6 @@
-#pragma once
 #include "ExpenseItem.h"
-#include "Member.h"
-#include "stdafx.h"
+#include <vector>
+#include <map>
 
 class SharedEvent
 {

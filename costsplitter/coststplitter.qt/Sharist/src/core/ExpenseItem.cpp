@@ -1,6 +1,7 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "ExpenseItem.h"
-#include "Member.h"
+
+using namespace::std;
 
 ExpenseItem::ExpenseItem(double cost, const Member* owner, vector<const Member*>* coveredMembers, vector<const Member*>* paid)
 {

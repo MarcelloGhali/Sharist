@@ -1,5 +1,5 @@
-﻿#include "stdafx.h"
-#include "SharedEvent.h"
+﻿#include "SharedEvent.h"
+#include <cmath>
 
 SharedEvent::SharedEvent(){
     expenseMap = initVector(size*size);

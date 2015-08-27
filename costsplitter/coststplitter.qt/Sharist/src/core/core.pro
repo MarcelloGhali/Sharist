@@ -15,14 +15,11 @@ SOURCES += \
     ExpenseItem.cpp \
     Member.cpp \
     SharedEvent.cpp \
-    stdafx.cpp
 
 HEADERS +=\
     ExpenseItem.h \
     Member.h \
     SharedEvent.h \
-    stdafx.h \
-    targetver.h
 
 unix {
     target.path = /usr/lib
