@@ -14,12 +14,12 @@ DEFINES += CORE_LIBRARY
 SOURCES += \
     ExpenseItem.cpp \
     Member.cpp \
-    SharedEvent.cpp \
+    SharedEvent.cpp
 
 HEADERS +=\
     ExpenseItem.h \
     Member.h \
-    SharedEvent.h \
+    SharedEvent.h
 
 unix {
     target.path = /usr/lib

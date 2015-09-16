@@ -1,7 +1,8 @@
 ﻿#include "SharedEvent.h"
 #include <cmath>
 
-SharedEvent::SharedEvent(){
+SharedEvent::SharedEvent(string name){
+    eventName = name;
     expenseMap = initVector(size*size);
     optimizedMap = initVector(size*size);
 	balanceVector = initVector(size);
@@ -14,6 +15,10 @@ SharedEvent::~SharedEvent(){
 
 int SharedEvent::GetCapacity(){
 	return this->size;
+}
+
+string SharedEvent::GetEventName() const{
+    return eventName;
 }
 
 int SharedEvent::GetGrowthRate(){
@@ -127,6 +132,12 @@ void SharedEvent::Print(){
     for (int i = 0; i < size; i++){
         if (balanceVector[i] < 0) totalOwe += balanceVector[i];
         else totalSpent += balanceVector[i];
+    }
+
+    // TODO: define what is total spend and total debt
+    totalSpent=0;
+    for(vector<const ExpenseItem*>::iterator it=expenseItems.begin(); it!=expenseItems.end();it++){
+        totalSpent+=(**it).cost;
     }
 
     printf("Total spent: %f\nTotal debt: %f", totalSpent, totalOwe);

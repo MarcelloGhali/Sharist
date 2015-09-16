@@ -12,6 +12,7 @@ public:
 private Q_SLOTS:
     void sharedevent_should_expand_if_new_members_added();
     void sharedevent_should_return_correct_optimization();
+    void sharedevent_should_return_correct_optimization1();
 };
 
 Core_Test::Core_Test()
@@ -27,7 +28,7 @@ void Core_Test::sharedevent_should_expand_if_new_members_added()
     maratMembers.push_back(&alex);
     maratMembers.push_back(&slava);
     ExpenseItem gas(100, &marat, 0, &maratMembers);
-    SharedEvent oregon;
+    SharedEvent oregon("oregon");
     oregon.AddMember(&marat);
     oregon.AddMember(&alex);
     oregon.AddMember(&slava);
@@ -66,7 +67,7 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
         slavaMembers.push_back(&marat);
         ExpenseItem gas(90, &marat, 0, &maratMembers);
         ExpenseItem food(120, &slava, 0, &slavaMembers);
-        SharedEvent oregon;
+        SharedEvent oregon("oregon");
         oregon.AddMember(&marat);
         oregon.AddMember(&alex);
         oregon.AddMember(&slava);
@@ -80,6 +81,37 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
         //adding new users
         QVERIFY(results[1*10 + 0] == alexOweMarat);
         QVERIFY(results[1*10 + 2] == alexOweSlava);
+}
+
+void Core_Test::sharedevent_should_return_correct_optimization1(){
+    //setup
+        Member marat("Marat");
+        Member alex("Alex");
+        Member ruslan("Ruslan");
+        vector<const Member*> maratMembers;
+        maratMembers.push_back(&alex);
+        maratMembers.push_back(&ruslan);
+        vector<const Member*> ruslanMembers;
+        ruslanMembers.push_back(&alex);
+        ruslanMembers.push_back(&marat);
+        ExpenseItem gas(87.07, &marat, 0, &maratMembers);
+        ExpenseItem food(126.91, &marat, 0, &maratMembers);
+        ExpenseItem camping(25, &ruslan, 0, &ruslanMembers);
+        SharedEvent oregon("oregon");
+        oregon.AddMember(&marat);
+        oregon.AddMember(&alex);
+        oregon.AddMember(&ruslan);
+        oregon.AddExpenseItem(&gas);
+        oregon.AddExpenseItem(&food);
+        oregon.AddExpenseItem(&camping);
+        //expected
+        double alexOweMarat = 79.660000;
+        double ruslanOweMarat = 54.660000;
+        //test
+        double* results = oregon.Optimize();
+        //adding new users
+        QVERIFY(results[1*10 + 0] == alexOweMarat);
+        QVERIFY(results[2*10 + 0] == ruslanOweMarat);
 }
 
 QTEST_APPLESS_MAIN(Core_Test)
