@@ -22,3 +22,5 @@ DEPENDPATH += $$PWD/../core
 
 HEADERS += \
     sharedeventmodel.h
+
+QMAKE_MAC_SDK = macosx10.11

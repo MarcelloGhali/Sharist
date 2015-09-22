@@ -13,13 +13,13 @@ public:
     };
 
     SharedEventModel(QObject *parent=0);
-    void addSharedEvent(const SharedEvent &event);
+    void addSharedEvent(const SharedEvent *event);
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 protected:
     QHash<int,QByteArray> roleNames() const;
 private:
-    QList<SharedEvent> sharedEvents;
+    QList<const SharedEvent*> sharedEvents;
 };
 
 #endif // SHAREDEVENTMODEL_H

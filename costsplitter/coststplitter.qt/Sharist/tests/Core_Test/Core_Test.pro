@@ -27,3 +27,5 @@ else:unix: LIBS += -L$$OUT_PWD/../../src/core/ -lcore
 
 INCLUDEPATH += $$PWD/../../src/core
 DEPENDPATH += $$PWD/../../src/core
+
+QMAKE_MAC_SDK = macosx10.11

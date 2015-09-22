@@ -1,6 +1,9 @@
 ﻿#include "SharedEvent.h"
 #include <cmath>
 
+int SharedEvent::size = 10;
+double SharedEvent::growthCoefficient = 2;
+
 SharedEvent::SharedEvent(string name){
     eventName = name;
     expenseMap = initVector(size*size);
@@ -31,9 +34,9 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 	int splitNumber = item->paid->size() + 1;
 	double share = item->cost / splitNumber;
 	// TODO : add validation. Currently users needs to be added prior to adding an expense item
-	if (areNewPeopleAdded(item)){
+//	if (areNewPeopleAdded(item)){
 
-	}
+//	}
 
 	// TODO: validation
 	int ownerIndex = membersMap[item->owner];
@@ -188,8 +191,4 @@ double* SharedEvent::initVector(int n){
     }
 
     return toReturn;
-}
-
-bool SharedEvent::areNewPeopleAdded(const ExpenseItem* item){
-    return true;
 }

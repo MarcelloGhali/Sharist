@@ -8,13 +8,12 @@ private:
     vector<const ExpenseItem*> expenseItems;
 	map<const Member*, int> membersMap;
 	int lastMemberOrder;
-	int size = 10;
-    double growthCoefficient = 2;
+    static int size;
+    static double growthCoefficient;
     double* expenseMap, *optimizedMap;
     double* balanceVector;
     string eventName;
     double* initVector(int n);
-	bool areNewPeopleAdded(const ExpenseItem* item);
 	const Member* findMember(int index);
     void expand();
     void dispose();

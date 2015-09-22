@@ -4,7 +4,7 @@ SharedEventModel::SharedEventModel(QObject *parent)
     :QAbstractListModel(parent){
 }
 
-void SharedEventModel::addSharedEvent(const SharedEvent &event){
+void SharedEventModel::addSharedEvent(const SharedEvent *event){
     beginInsertRows(QModelIndex(),rowCount(),rowCount());
     sharedEvents<<event;
     endInsertRows();
@@ -19,9 +19,9 @@ QVariant SharedEventModel::data(const QModelIndex &index, int role) const{
         return QVariant();
     }
 
-    const SharedEvent &e = sharedEvents[index.row()];
+    const SharedEvent* e = sharedEvents[index.row()];
     if (role==NameRole)
-        return QString::fromStdString(e.GetEventName());
+        return QString::fromStdString(e->GetEventName());
 
     return QVariant();
 }

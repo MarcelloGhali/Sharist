@@ -25,3 +25,5 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+QMAKE_MAC_SDK = macosx10.11

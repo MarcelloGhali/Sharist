@@ -11,8 +11,10 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     SharedEventModel model;
-    model.addSharedEvent(SharedEvent("Oregon"));
-    model.addSharedEvent(SharedEvent("Idaho"));
+    SharedEvent oregon("Oregon");
+    SharedEvent idaho("Idaho");
+    model.addSharedEvent(&oregon);
+    model.addSharedEvent(&idaho);
     QQuickView view;
     QQmlContext *cntx = view.rootContext();
     cntx->setContextProperty("eventsModel",&model);
