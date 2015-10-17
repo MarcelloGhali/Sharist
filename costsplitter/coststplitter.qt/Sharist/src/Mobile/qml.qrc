@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>ListSharedEvent.qml</file>
+        <file>NewSharedEvent.qml</file>
+        <file>DetailsSharedEvent.qml</file>
+        <file>Base.qml</file>
     </qresource>
 </RCC>

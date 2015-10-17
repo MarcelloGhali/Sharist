@@ -20,8 +20,12 @@ int SharedEvent::GetCapacity(){
 	return this->size;
 }
 
-string SharedEvent::GetEventName() const{
+string SharedEvent::GetEventName(){
     return eventName;
+}
+
+void SharedEvent::SetEventName(string name){
+    this->eventName = name;
 }
 
 int SharedEvent::GetGrowthRate(){

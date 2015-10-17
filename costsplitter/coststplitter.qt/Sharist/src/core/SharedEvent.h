@@ -25,7 +25,8 @@ public:
 	void RemoveMember(const Member* memberToRemove);
 	int GetCapacity();
 	int GetGrowthRate();
-    string GetEventName() const;
+    string GetEventName();
+    void SetEventName(string name);
     double* Optimize();
     double* Optimize(double* input);
 	void Print();

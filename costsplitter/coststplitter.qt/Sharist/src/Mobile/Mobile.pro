@@ -3,7 +3,9 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    sharedeventmodel.cpp
+    NavigatorMap.cpp \
+    SharedEventListModel.cpp \
+    SharedEventModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -21,6 +23,8 @@ INCLUDEPATH += $$PWD/../core
 DEPENDPATH += $$PWD/../core
 
 HEADERS += \
-    sharedeventmodel.h
+    NavigatorMap.h \
+    SharedEventListModel.h \
+    SharedEventModel.h
 
 QMAKE_MAC_SDK = macosx10.11
