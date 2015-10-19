@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 import Sharist.Models 1.0
 
-ColumnLayout {
+Column{
     Text{
         text: eventsModel.selectedSharedEvent.name
     }

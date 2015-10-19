@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.1
 
 Rectangle{
     id: mainWindow
+    //anchors.fill: parent
     Component {
        id: eventDelegate
        Item {
@@ -28,22 +29,27 @@ Rectangle{
            }
        }
     }
-    ListView{
-        id: list
-        model: eventsModel
-        width:parent.width
-        height:count*40
-        delegate: eventDelegate
-        highlight: Rectangle{color:"lightsteelblue"}
-        focus:true
-    }
-    Button{
-        id: addNewSharedEvent
-        anchors.top: list.bottom
-        text: "Add new event"
-        onClicked: {
-            if (navigator){
-                navigator.push({item:Qt.resolvedUrl("NewSharedEvent.qml")})
+    Column{
+        spacing: 10
+        anchors.fill: parent
+        ListView{
+            id: list
+            clip: true
+            model: eventsModel
+            width:parent.width
+            height:4*40
+            delegate: eventDelegate
+            highlight: Rectangle{color:"lightsteelblue"}
+            focus:true
+        }
+        Button{
+            id: addNewSharedEvent
+            width: parent.width
+            text: "Add new event"
+            onClicked: {
+                if (navigator){
+                    navigator.push({item:Qt.resolvedUrl("NewSharedEvent.qml")})
+                }
             }
         }
     }

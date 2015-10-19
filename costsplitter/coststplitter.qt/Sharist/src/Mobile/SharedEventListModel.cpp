@@ -4,9 +4,18 @@ SharedEventListModel::SharedEventListModel(QObject *parent)
     :QAbstractListModel(parent){
 }
 
-void SharedEventListModel::addSharedEvent(SharedEventModel *event){
+void SharedEventListModel::addSharedEvent(const QString& eventName){
     beginInsertRows(QModelIndex(),rowCount(),rowCount());
-    sharedEvents<<event;
+    //todo: create new object in factory, so that they all garbage collected
+    SharedEvent *rawSharedEvent = new SharedEvent(eventName.toStdString());
+    SharedEventModel *newModel = new SharedEventModel(rawSharedEvent);
+    sharedEvents.append(newModel);
+    endInsertRows();
+}
+
+void SharedEventListModel::addSharedEvent(SharedEventModel* newModel){
+    beginInsertRows(QModelIndex(),rowCount(),rowCount());
+    sharedEvents<<newModel;
     endInsertRows();
 }
 
@@ -43,10 +52,3 @@ SharedEventModel* SharedEventListModel::selectedSharedEvent(){
     return this->sharedEvents[this->_selectedIndex];
 }
 
-//SharedEventModel* SharedEventListModel::getSelected(const int index){
-//    if (index<0 || index>=sharedEvents.count()){
-//        return 0;
-//    }
-
-//    return sharedEvents[index];
-//}
