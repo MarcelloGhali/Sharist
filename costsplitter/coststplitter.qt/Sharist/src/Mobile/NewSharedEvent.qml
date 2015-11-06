@@ -15,14 +15,25 @@ Column{
         width: parent.width
         cursorVisible: true
     }
-    Button{
-        id: addNewSharedEvent
+    Row{
         width: parent.width
-        text: "Save"
-        onClicked: {
-            eventsModel.addSharedEvent(eventName.text)
-            if (navigator){
-                navigator.pop()
+        Button{
+            id: backBtn
+            text: "Back"
+            onClicked: {
+                if (navigator){
+                    navigator.pop()
+                }
+            }
+        }
+        Button{
+            id: addNewSharedEvent
+            text: "Save"
+            onClicked: {
+                eventsModel.addSharedEvent(eventName.text)
+                if (navigator){
+                    navigator.pop()
+                }
             }
         }
     }

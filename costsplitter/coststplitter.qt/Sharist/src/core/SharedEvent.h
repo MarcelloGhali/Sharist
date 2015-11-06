@@ -5,7 +5,6 @@
 class SharedEvent
 {
 private:
-    vector<const ExpenseItem*> expenseItems;
 	map<const Member*, int> membersMap;
 	int lastMemberOrder;
     static int size;
@@ -19,6 +18,7 @@ private:
     void dispose();
 public:
     SharedEvent(string name);
+    vector<const ExpenseItem*> expenseItems;
 	void RemoveExpenseItem(const ExpenseItem* item);
 	void AddExpenseItem(const ExpenseItem* item);
 	void AddMember(const Member* newMember);

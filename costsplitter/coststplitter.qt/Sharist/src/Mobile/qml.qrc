@@ -4,5 +4,6 @@
         <file>NewSharedEvent.qml</file>
         <file>DetailsSharedEvent.qml</file>
         <file>Base.qml</file>
+        <file>NewExpenseItem.qml</file>
     </qresource>
 </RCC>

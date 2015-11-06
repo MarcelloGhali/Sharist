@@ -17,10 +17,20 @@ int main(int argc, char *argv[])
     init();
     QGuiApplication app(argc, argv);
     QQuickView view;
-    SharedEventListModel model;
+    // core
     NavigatorMap navMap;
     SharedEvent oregon("Oregon");
     SharedEvent idaho("Idaho");
+    Member slava("Slava");
+    Member marat("Marat");
+    Member alex("Alex");
+    vector<const Member*> paid;
+    paid.push_back(&slava);
+    paid.push_back(&alex);
+    ExpenseItem item(40, &marat, 0, &paid);
+    oregon.AddExpenseItem(&item);
+    //models
+    SharedEventListModel model;
     SharedEventModel oregonEventModel(&oregon);
     SharedEventModel idahoEventModel(&idaho);
     model.addSharedEvent(&oregonEventModel);

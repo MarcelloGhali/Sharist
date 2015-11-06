@@ -33,7 +33,6 @@ int SharedEvent::GetGrowthRate(){
 }
 
 void SharedEvent::AddExpenseItem(const ExpenseItem* item){
-	expenseItems.push_back(item);
 	// TODO : we currently don't support members in a group
 	int splitNumber = item->paid->size() + 1;
 	double share = item->cost / splitNumber;
@@ -48,6 +47,7 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 		int paidForMemberIndex = membersMap[*it];
         this->expenseMap[paidForMemberIndex*size + ownerIndex] += share;
 	}
+    expenseItems.push_back(item);
 }
 
 //TODO:implement expense item removal

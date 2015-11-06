@@ -1,5 +1,5 @@
-//#pragma once
-//#include "stdafx.h"
+#ifndef EXPENSEITEM_H
+#define EXPENSEITEM_H
 #include <vector>
 #include "Member.h"
 
@@ -16,3 +16,4 @@ public:
 	~ExpenseItem();
 };
 
+#endif

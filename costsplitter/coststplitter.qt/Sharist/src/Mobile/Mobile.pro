@@ -5,7 +5,10 @@ QT += qml quick
 SOURCES += main.cpp \
     NavigatorMap.cpp \
     SharedEventListModel.cpp \
-    SharedEventModel.cpp
+    SharedEventModel.cpp \
+    ExpenseItemListModel.cpp \
+    MemberModel.cpp \
+    ExpenseItemModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -25,6 +28,9 @@ DEPENDPATH += $$PWD/../core
 HEADERS += \
     NavigatorMap.h \
     SharedEventListModel.h \
-    SharedEventModel.h
+    SharedEventModel.h \
+    ExpenseItemListModel.h \
+    MemberModel.h \
+    ExpenseItemModel.h
 
 QMAKE_MAC_SDK = macosx10.11
