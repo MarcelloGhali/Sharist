@@ -1,3 +1,4 @@
+#include <string>
 #include "ExpenseItemListModel.h"
 
 ExpenseItemListModel::ExpenseItemListModel(QObject *parent):
@@ -10,12 +11,14 @@ int ExpenseItemListModel::rowCount(const QModelIndex &parent) const{
 
 QVariant ExpenseItemListModel::data(const QModelIndex &index, int role) const{
     if (index.row()<0 || index.row()>=this->expenses->size()){
-        return QVariant();
+        return QVariant(QString::null);
     }
 
-    if (role==Qt::DisplayRole){
+    if (role==Qt::DisplayRole && this->expenses->size()>0){
         const ExpenseItem* item = this->expenses->at(index.row());
-        return QVariant(item->cost);
+        const Member* member = item->owner;
+        QString outStr = QString::fromStdString(member->Name) + ": " + QString::number(item->cost);
+        return QVariant(outStr);
     }
 
     return QVariant();

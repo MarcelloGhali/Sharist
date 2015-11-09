@@ -2,17 +2,16 @@ import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
-Rectangle{
+Item{
     id: mainWindow
-    //anchors.fill: parent
+    width: 320
+    height: 400
     Component {
        id: eventDelegate
-       Item {
+       Item{
            width: parent.width
            height: 40
-           Column {
-               Text { text: '<b>Event name:</b> ' + name }
-           }
+           Text { text: '<b>Event name:</b> ' + name }
            MouseArea{
                anchors.fill: parent
                onClicked: {
@@ -34,12 +33,14 @@ Rectangle{
         anchors.fill: parent
         ListView{
             id: list
-            clip: true
+            //clip: true
             model: eventsModel
             width:parent.width
             height:4*40
+            spacing: 10
+            boundsBehavior: Flickable.StopAtBounds
             delegate: eventDelegate
-            highlight: Rectangle{color:"lightsteelblue"}
+            highlight: Rectangle{color:"lightsteelblue"; radius: 5}
             focus:true
         }
         Button{
