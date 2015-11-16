@@ -28,6 +28,9 @@ int main(int argc, char *argv[])
     paid.push_back(&slava);
     paid.push_back(&alex);
     ExpenseItem item(40, &marat, 0, &paid);
+    oregon.AddMember(&slava);
+    oregon.AddMember(&alex);
+    oregon.AddMember(&marat);
     oregon.AddExpenseItem(&item);
     //models
     SharedEventListModel model;

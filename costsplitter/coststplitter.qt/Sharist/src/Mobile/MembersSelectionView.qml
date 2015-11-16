@@ -1,53 +1,51 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.1
-import Sharist.Models 1.0
+import QtQuick.Controls 1.3
 
-Item{
+Item {
     width: 320
     height: 400
     Column{
         spacing: 10
         anchors.fill: parent
-        Text{
-            width: parent.width
-            text: eventsModel.selectedSharedEvent.name
+        Text {
+            id: text1
+            text: qsTr("Members")
             horizontalAlignment: Text.AlignHCenter
             height: 40
+            width: parent.width
         }
         ListView{
-            id: expenses
-            model: eventsModel.selectedSharedEvent.expenseList
+            model: eventsModel.selectedSharedEvent.memberList
+            width: parent.width
+            height: 4*40
             delegate: Text {
                 text: model.display
                 height: 40
                 width: parent.width
             }
-            height: 4*40
-            width:parent.width
             highlight: Rectangle{color:"lightsteelblue"; radius: 5}
-            focus:true
         }
         Row{
             width: parent.width
+            height: 40
             spacing: 10
-            Button{
-                id: backBtn
-                text: "Back"
+
+            Button {
+                id: button1
+                text: qsTr("Back")
                 onClicked: {
                     if (navigator){
                         navigator.pop()
                     }
                 }
             }
-            Button{
-                id: addExpenseBtn
-                text: "Add expense"
-                onClicked: {
-                    if (navigator)
-                        navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
-                }
+
+            Button {
+                id: button2
+                text: qsTr("Add")
             }
+
         }
     }
 }
+

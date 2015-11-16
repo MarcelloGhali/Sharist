@@ -2,11 +2,16 @@
 #include "ExpenseItemListModel.h"
 
 ExpenseItemListModel::ExpenseItemListModel(QObject *parent):
-    QAbstractListModel(parent){ }
+    QAbstractListModel(parent){
+    this->expenses = NULL;
+}
 
 int ExpenseItemListModel::rowCount(const QModelIndex &parent) const{
-    //int size = this->expenses->size();
-    return 1;
+    if (this->expenses==NULL){
+        return 0;
+    }
+
+    return this->expenses->size();
 }
 
 QVariant ExpenseItemListModel::data(const QModelIndex &index, int role) const{

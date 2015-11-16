@@ -67,7 +67,7 @@ void SharedEvent::AddMember(const Member* newMember){
 	if (lastMemberOrder == size){
         expand();
 	}
-
+    members.push_back(newMember);
 	membersMap.insert(std::pair<const Member*, int>(newMember, lastMemberOrder++));
 }
 
@@ -195,4 +195,8 @@ double* SharedEvent::initVector(int n){
     }
 
     return toReturn;
+}
+
+vector<const Member*>* SharedEvent::GetMembers(){
+    return &members;
 }

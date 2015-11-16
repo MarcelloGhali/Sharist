@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     SharedEventModel.cpp \
     ExpenseItemListModel.cpp \
     MemberModel.cpp \
-    ExpenseItemModel.cpp
+    ExpenseItemModel.cpp \
+    MemberListModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,6 +32,7 @@ HEADERS += \
     SharedEventModel.h \
     ExpenseItemListModel.h \
     MemberModel.h \
-    ExpenseItemModel.h
+    ExpenseItemModel.h \
+    MemberListModel.h
 
 QMAKE_MAC_SDK = macosx10.11
