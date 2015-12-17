@@ -45,6 +45,7 @@ Item{
                 text: "Add expense"
                 onClicked: {
                     if (navigator)
+                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
                         navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
                 }
             }

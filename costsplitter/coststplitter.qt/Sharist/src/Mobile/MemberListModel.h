@@ -5,17 +5,27 @@
 #include <QAbstractListModel>
 #include <QList>
 #include "Member.h"
+#include "MemberModel.h"
 
 class MemberListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit MemberListModel(QObject *parent = 0);
+    enum MemberRoles{
+        SelectedRole=Qt::UserRole+1,
+        NameRole=Qt::UserRole+2
+    };
+    MemberListModel(QObject *parent = 0);
+    Q_INVOKABLE void deselect();
+    QList<MemberModel*>* getSelected();
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    void addMembers(vector<const Member*>* membersVector);
+    void addMember(MemberModel* model);
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
+protected:
+    QHash<int,QByteArray> roleNames() const;
 private:
-    vector<const Member*>* members;
+    QList<MemberModel*> memberModels;
 signals:
 
 public slots:

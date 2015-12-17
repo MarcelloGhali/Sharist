@@ -42,7 +42,7 @@ Item{
                 text: "*"
                 onClicked:{
                     if (navigator){
-                        navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml")})
+                        navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:"false"}})
                     }
                 }
             }
@@ -50,22 +50,30 @@ Item{
         Row {
             id: row3
             width: parent.width
-            height: 40
+            height: 40*(paidList.count+1)
             spacing: 10
             Label {
                 id: coveredLabel
                 width: 43
                 height: 40
-                text: qsTr("Covered:")
+                text: qsTr("Paid:")
             }
-            Repeater{
-                //model:eventsModel.selectedSharedEvent
-            }
-            Button{
-                text: "*"
-                onClicked:{
-                    if (navigator){
-                        navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml")})
+            Column{
+                ListView{
+                    id: paidList
+                    width: 200
+                    height: 40
+                    model:eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid
+                    delegate: Text{
+                        text: Name
+                    }
+                }
+                Button{
+                    text: "*"
+                    onClicked:{
+                        if (navigator){
+                            navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:"true"}})
+                        }
                     }
                 }
             }

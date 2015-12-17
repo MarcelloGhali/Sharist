@@ -3,6 +3,10 @@
 
 using namespace::std;
 
+ExpenseItem::ExpenseItem(){
+    this->paid = new vector<const Member*>;
+}
+
 ExpenseItem::ExpenseItem(double cost, const Member* owner, vector<const Member*>* coveredMembers, vector<const Member*>* paid)
 {
 	this->cost = cost;

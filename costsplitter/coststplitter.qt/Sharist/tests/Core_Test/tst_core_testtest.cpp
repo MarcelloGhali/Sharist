@@ -13,6 +13,7 @@ private Q_SLOTS:
     void sharedevent_should_expand_if_new_members_added();
     void sharedevent_should_return_correct_optimization();
     void sharedevent_should_return_correct_optimization1();
+    void sharedevent_should_return_correct_optimization2();
 };
 
 Core_Test::Core_Test()
@@ -112,6 +113,39 @@ void Core_Test::sharedevent_should_return_correct_optimization1(){
         //adding new users
         QVERIFY(results[1*10 + 0] == alexOweMarat);
         QVERIFY(results[2*10 + 0] == ruslanOweMarat);
+}
+
+void Core_Test::sharedevent_should_return_correct_optimization2(){
+    //setup
+        Member marat("Marat");
+        Member alex("Alex");
+        Member ruslan("Ruslan");
+        vector<const Member*> maratMembers;
+        maratMembers.push_back(&alex);
+        maratMembers.push_back(&ruslan);
+        vector<const Member*> ruslanMembers;
+        ruslanMembers.push_back(&alex);
+        ruslanMembers.push_back(&marat);
+        ExpenseItem gas(45, &marat, 0, &maratMembers);
+        ExpenseItem alco(30, &marat, 0, &maratMembers);
+        ExpenseItem grocery(68.44, &marat, 0, &maratMembers);
+        ExpenseItem lodge(321, &ruslan, 0, &ruslanMembers);
+        SharedEvent canada("canada");
+        canada.AddMember(&marat);
+        canada.AddMember(&alex);
+        canada.AddMember(&ruslan);
+        canada.AddExpenseItem(&gas);
+        canada.AddExpenseItem(&alco);
+        canada.AddExpenseItem(&grocery);
+        canada.AddExpenseItem(&lodge);
+        //expected
+        double maratOweRuslan = 11.323333;
+        double alexOweRuslan = 154.813333;
+        //test
+        double* results = canada.Optimize();
+        //adding new users
+        QVERIFY(results[2] == maratOweRuslan);
+        QVERIFY(results[2*10 + 0] == alexOweRuslan);
 }
 
 QTEST_APPLESS_MAIN(Core_Test)

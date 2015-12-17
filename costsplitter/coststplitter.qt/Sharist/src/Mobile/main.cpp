@@ -10,6 +10,10 @@
 
 void init(){
     qmlRegisterType<SharedEventModel>("Sharist.Models",1,0,"SharedEventModel");
+    qmlRegisterType<MemberModel>("Sharist.Models",1,0,"MemberModel");
+    qmlRegisterType<ExpenseItemModel>("Sharist.Models",1,0,"ExpenseItemModel");
+    qmlRegisterType<ExpenseItemListModel>("Sharist.Models",1,0,"ExpenseItemListModel");
+    qmlRegisterType<MemberListModel>("Sharist.Models",1,0,"MemberListModel");
 }
 
 int main(int argc, char *argv[])

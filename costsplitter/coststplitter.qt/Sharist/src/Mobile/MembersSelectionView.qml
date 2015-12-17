@@ -1,9 +1,37 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.3
+import Sharist.Models 1.0
 
 Item {
     width: 320
     height: 400
+    property bool isMultiselect
+    Component {
+       id: memberDelegate
+       Item{
+           width: parent.width
+           height: 40
+           Rectangle{
+               id: memberCntr
+               width: parent.width
+               height: parent.height
+               radius: 5
+               color: { Selected ? "lightsteelblue" : "white" }
+               Text {
+                   text: Name
+               }
+           }
+           MouseArea{
+               anchors.fill: parent
+               onClicked: {
+                   if (isMultiselect){
+                       Selected=!Selected
+                   }
+               }
+           }
+       }
+    }
+
     Column{
         spacing: 10
         anchors.fill: parent
@@ -18,12 +46,7 @@ Item {
             model: eventsModel.selectedSharedEvent.memberList
             width: parent.width
             height: 4*40
-            delegate: Text {
-                text: model.display
-                height: 40
-                width: parent.width
-            }
-            highlight: Rectangle{color:"lightsteelblue"; radius: 5}
+            delegate:memberDelegate
         }
         Row{
             width: parent.width
@@ -35,16 +58,18 @@ Item {
                 text: qsTr("Back")
                 onClicked: {
                     if (navigator){
-                        navigator.pop()
+                        if (isMultiselect)
+                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid = eventsModel.selectedSharedEvent.memberList;
+                        //else
+//                            for (int i=0;i<eventsModel.selectedSharedEvent.memberList.length;i++){
+//                                if (eventsModel.selectedSharedEvent.memberList[i].Selected){
+//                                    eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.setOwner(eventsModel.selectedSharedEvent.memberList[i]);
+//                                }
+//                            }
+                            navigator.pop()
                     }
                 }
             }
-
-            Button {
-                id: button2
-                text: qsTr("Add")
-            }
-
         }
     }
 }

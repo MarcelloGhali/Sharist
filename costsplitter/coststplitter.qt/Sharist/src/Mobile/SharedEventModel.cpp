@@ -6,14 +6,15 @@ SharedEventModel::SharedEventModel(QObject *parent)
 SharedEventModel::SharedEventModel(SharedEvent* rawSharedEvent){
     this->rawSharedEvent = rawSharedEvent;
     //TODO: manage memory allocation
-    // add expenses
     this->expensesListModel = new ExpenseItemListModel;
     this->expensesListModel->AddExpenseItems(&(rawSharedEvent->expenseItems));
-    // TODO: add members
+    // TODO: manage memory properly
     vector<const Member*>* members = this->rawSharedEvent->GetMembers();
     this->memberListModel = new MemberListModel;
     if (members->size()>0){
-        this->memberListModel->addMembers(members);
+        for(vector<const Member*>::iterator it=members->begin(); it!=members->end(); it++){
+            this->memberListModel->addMember(new MemberModel(*it));
+        }
     }
 }
 

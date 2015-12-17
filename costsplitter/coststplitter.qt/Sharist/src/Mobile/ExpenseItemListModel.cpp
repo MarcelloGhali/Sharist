@@ -6,6 +6,11 @@ ExpenseItemListModel::ExpenseItemListModel(QObject *parent):
     this->expenses = NULL;
 }
 
+void ExpenseItemListModel::createTempExpense(){
+    //TODO: memory management
+    this->currentExpense = new ExpenseItemModel;
+}
+
 int ExpenseItemListModel::rowCount(const QModelIndex &parent) const{
     if (this->expenses==NULL){
         return 0;
@@ -33,4 +38,8 @@ void ExpenseItemListModel::AddExpenseItems(vector<const ExpenseItem *> *expenseV
     this->beginInsertRows(QModelIndex(),1,1);
     this->expenses = expenseVector;
     this->endInsertRows();
+}
+
+ExpenseItemModel* ExpenseItemListModel::currentExpenseItem(){
+    return this->currentExpense;
 }
