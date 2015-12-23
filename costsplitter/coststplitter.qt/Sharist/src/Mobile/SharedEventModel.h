@@ -10,23 +10,27 @@
 class SharedEventModel : public QObject
 {
     Q_OBJECT
+public:
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString result READ result NOTIFY resultChanged)
     Q_PROPERTY(ExpenseItemListModel *expenseList READ expenseList NOTIFY expenseListChanged)
     Q_PROPERTY(MemberListModel *memberList READ memberList NOTIFY memberListChanged)
+    Q_INVOKABLE void addExpenseItem(ExpenseItemModel* model);
+    SharedEventModel(QObject *parent = 0);
+    SharedEventModel(SharedEvent* rawSharedEvent);
+    QString name() const;
+    QString result();
+    ExpenseItemListModel* expenseList();
+    MemberListModel* memberList();
 private:
     SharedEvent* rawSharedEvent;
     ExpenseItemListModel* expensesListModel;
     MemberListModel* memberListModel;
-public:
-    SharedEventModel(QObject *parent = 0);
-    SharedEventModel(SharedEvent* rawSharedEvent);
-    QString name() const;
-    ExpenseItemListModel* expenseList();
-    MemberListModel* memberList();
 signals:
     void expenseListChanged();
     void nameChanged();
     void memberListChanged();
+    void resultChanged();
 };
 
 #endif // SHAREDEVENTMODEL_H

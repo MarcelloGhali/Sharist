@@ -24,9 +24,11 @@ Item {
            MouseArea{
                anchors.fill: parent
                onClicked: {
-                   if (isMultiselect){
-                       Selected=!Selected
+                   if (!isMultiselect){
+                      eventsModel.selectedSharedEvent.memberList.deselect(index);
                    }
+
+                   Selected=!Selected;
                }
            }
        }
@@ -60,13 +62,9 @@ Item {
                     if (navigator){
                         if (isMultiselect)
                             eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid = eventsModel.selectedSharedEvent.memberList;
-                        //else
-//                            for (int i=0;i<eventsModel.selectedSharedEvent.memberList.length;i++){
-//                                if (eventsModel.selectedSharedEvent.memberList[i].Selected){
-//                                    eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.setOwner(eventsModel.selectedSharedEvent.memberList[i]);
-//                                }
-//                            }
-                            navigator.pop()
+                        else
+                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner = eventsModel.selectedSharedEvent.memberList.getFirstSelected();
+                        navigator.pop()
                     }
                 }
             }

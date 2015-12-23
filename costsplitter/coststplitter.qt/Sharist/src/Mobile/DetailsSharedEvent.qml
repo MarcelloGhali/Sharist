@@ -28,6 +28,11 @@ Item{
             highlight: Rectangle{color:"lightsteelblue"; radius: 5}
             focus:true
         }
+        Text{
+            width: parent.width
+            text: eventsModel.selectedSharedEvent.result
+            height: 80
+        }
         Row{
             width: parent.width
             spacing: 10

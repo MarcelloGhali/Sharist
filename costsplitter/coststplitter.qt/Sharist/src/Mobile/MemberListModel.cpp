@@ -9,11 +9,28 @@ int MemberListModel::rowCount(const QModelIndex &parent) const{
     return this->memberModels.size();
 }
 
-void MemberListModel::deselect(){
+void MemberListModel::deselect(int i){
     for(QList<MemberModel*>::Iterator it = this->memberModels.begin();it!=this->memberModels.end(); it++){
         MemberModel* member = *it;
         member->setSelected(false);
     }
+
+    QModelIndex start = this->createIndex(0,0);
+    QModelIndex end = this->createIndex(rowCount()-1,0);
+    emit dataChanged(start, end);
+}
+
+MemberModel* MemberListModel::getFirstSelected(){
+    //TODO:: memoryManagement
+    MemberModel* toReturn = new MemberModel;
+    for(QList<MemberModel*>::Iterator it = this->memberModels.begin();it!=this->memberModels.end(); it++){
+        MemberModel* member = *it;
+        if (member->selected()){
+            toReturn = member;
+        }
+    }
+
+    return toReturn;
 }
 
 QList<MemberModel*>* MemberListModel::getSelected(){

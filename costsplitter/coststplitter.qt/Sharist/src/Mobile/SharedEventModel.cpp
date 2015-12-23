@@ -18,6 +18,19 @@ SharedEventModel::SharedEventModel(SharedEvent* rawSharedEvent){
     }
 }
 
+void SharedEventModel::addExpenseItem(ExpenseItemModel *model){
+    ExpenseItem* item = model->getRawExpenseItem();
+    this->rawSharedEvent->AddExpenseItem(item);
+    resultChanged();
+    expenseListChanged();
+}
+
+QString SharedEventModel::result(){
+    this->rawSharedEvent->Optimize();
+    QString results = QString::fromStdString(this->rawSharedEvent->Print());
+    return results;
+}
+
 QString SharedEventModel::name() const{
     return QString::fromStdString(this->rawSharedEvent->GetEventName());
 }

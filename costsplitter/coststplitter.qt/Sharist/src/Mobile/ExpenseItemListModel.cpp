@@ -40,6 +40,13 @@ void ExpenseItemListModel::AddExpenseItems(vector<const ExpenseItem *> *expenseV
     this->endInsertRows();
 }
 
+void ExpenseItemListModel::addExpenseItem(ExpenseItem *expenseItem){
+    this->beginInsertRows(QModelIndex(),1,1);
+    this->expenses->push_back(expenseItem);
+    this->endInsertRows();
+    this->currentExpense = NULL;
+}
+
 ExpenseItemModel* ExpenseItemListModel::currentExpenseItem(){
     return this->currentExpense;
 }

@@ -22,6 +22,10 @@ MemberListModel* ExpenseItemModel::paid(){
 }
 
 void ExpenseItemModel::setPaid(MemberListModel* members){
+    //clear all there was before
+    delete this->rawExpenseItem->paid;
+    this->rawExpenseItem->paid = new vector<const Member*>;
+
     QList<MemberModel*>* models = members->getSelected();
     for(QList<MemberModel*>::iterator it=models->begin(); it!=models->end(); it++){
         MemberModel* model = *it;
@@ -40,6 +44,7 @@ MemberModel* ExpenseItemModel::owner(){
 
 void ExpenseItemModel::setOwner(MemberModel* member){
     this->rawExpenseItem->owner = member->getRawMember();
+    ownerChanged();
 }
 
 double ExpenseItemModel::cost(){
@@ -47,5 +52,12 @@ double ExpenseItemModel::cost(){
 }
 
 void ExpenseItemModel::setCost(double value){
-    this->rawExpenseItem->cost = value;
+    if (value!=this->rawExpenseItem->cost){
+        this->rawExpenseItem->cost = value;
+        costChanged();
+    }
+}
+
+ExpenseItem* ExpenseItemModel::getRawExpenseItem(){
+    return this->rawExpenseItem;
 }

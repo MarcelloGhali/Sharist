@@ -1,5 +1,6 @@
 #include <QString>
 #include <QtTest>
+#include <cstdio>
 #include "SharedEvent.h"
 
 class Core_Test : public QObject
@@ -126,23 +127,27 @@ void Core_Test::sharedevent_should_return_correct_optimization2(){
         vector<const Member*> ruslanMembers;
         ruslanMembers.push_back(&alex);
         ruslanMembers.push_back(&marat);
-        ExpenseItem gas(45, &marat, 0, &maratMembers);
-        ExpenseItem alco(30, &marat, 0, &maratMembers);
-        ExpenseItem grocery(68.44, &marat, 0, &maratMembers);
+//        ExpenseItem gas(45, &marat, 0, &maratMembers);
+//        ExpenseItem alco(30, &marat, 0, &maratMembers);
+//        ExpenseItem grocery(68.44, &marat, 0, &maratMembers);
+        ExpenseItem err(143.44, &marat, 0, &maratMembers);
         ExpenseItem lodge(321, &ruslan, 0, &ruslanMembers);
         SharedEvent canada("canada");
         canada.AddMember(&marat);
         canada.AddMember(&alex);
         canada.AddMember(&ruslan);
-        canada.AddExpenseItem(&gas);
-        canada.AddExpenseItem(&alco);
-        canada.AddExpenseItem(&grocery);
+        canada.AddExpenseItem(&err);
+//        canada.AddExpenseItem(&gas);
+//        canada.AddExpenseItem(&alco);
+//        canada.AddExpenseItem(&grocery);
         canada.AddExpenseItem(&lodge);
         //expected
         double maratOweRuslan = 11.323333;
         double alexOweRuslan = 154.813333;
         //test
         double* results = canada.Optimize();
+        string t = canada.Print();
+        std::printf(t.c_str());
         //adding new users
         QVERIFY(results[2] == maratOweRuslan);
         QVERIFY(results[2*10 + 0] == alexOweRuslan);

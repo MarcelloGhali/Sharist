@@ -20,7 +20,10 @@ void MemberModel::setSelected(bool isSelected){
 }
 
 QString MemberModel::name(){
-    return QString::fromStdString(this->rawMember->Name);
+    if (this->rawMember!=NULL)
+        return QString::fromStdString(this->rawMember->Name);
+    else
+        return QString();
 }
 
 const Member* MemberModel::getRawMember(){

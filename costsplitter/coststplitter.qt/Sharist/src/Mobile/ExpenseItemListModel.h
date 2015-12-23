@@ -15,6 +15,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     void AddExpenseItems(vector<const ExpenseItem*>* expenseVector);
+    void addExpenseItem(ExpenseItem* expenseItem);
     ExpenseItemModel* currentExpenseItem();
 private:
     vector<const ExpenseItem*>* expenses;

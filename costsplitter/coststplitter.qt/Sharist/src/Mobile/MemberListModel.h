@@ -16,7 +16,8 @@ public:
         NameRole=Qt::UserRole+2
     };
     MemberListModel(QObject *parent = 0);
-    Q_INVOKABLE void deselect();
+    Q_INVOKABLE void deselect(int i);
+    Q_INVOKABLE MemberModel* getFirstSelected();
     QList<MemberModel*>* getSelected();
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

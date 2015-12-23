@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import Sharist.Models 1.0
 
 Item{
     width: 320
@@ -21,7 +22,12 @@ Item{
             }
             TextField {
                 id: textField1
-                placeholderText: qsTr("Text Field")
+                text: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost
+                Binding{
+                    target: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem
+                    property: "cost"
+                    value: textField1.text
+                }
             }
         }
         Row {
@@ -35,22 +41,24 @@ Item{
                 height: 40
                 text: qsTr("Owner:")
             }
-            Repeater{
-                //model:eventsModel.selectedSharedEvent
-            }
-            Button{
-                text: "*"
-                onClicked:{
-                    if (navigator){
-                        navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:"false"}})
+            Column{
+                Button{
+                    text: "*"
+                    onClicked:{
+                        if (navigator){
+                            navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:false}})
+                        }
                     }
+                }
+                Text{
+                    text: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner.name
                 }
             }
         }
         Row {
             id: row3
             width: parent.width
-            height: 40*(paidList.count+1)
+            height: 80
             spacing: 10
             Label {
                 id: coveredLabel
@@ -59,21 +67,21 @@ Item{
                 text: qsTr("Paid:")
             }
             Column{
-                ListView{
-                    id: paidList
-                    width: 200
-                    height: 40
-                    model:eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid
-                    delegate: Text{
-                        text: Name
-                    }
-                }
                 Button{
                     text: "*"
                     onClicked:{
                         if (navigator){
                             navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:"true"}})
                         }
+                    }
+                }
+                ListView{
+                    id: paidList
+                    height: 40
+                    width: 200
+                    model:eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid
+                    delegate: Text{
+                        text: Name
                     }
                 }
             }
@@ -97,7 +105,8 @@ Item{
                 text: "Save"
                 onClicked: {
                     if (navigator){
-
+                        eventsModel.selectedSharedEvent.addExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
+                        navigator.pop()
                     }
                 }
             }

@@ -22,6 +22,7 @@ public:
     void setCost(double value);
     void setOwner(MemberModel* members);
     void setPaid(MemberListModel* members);
+    ExpenseItem* getRawExpenseItem();
 private:
     ExpenseItem* rawExpenseItem;
 signals:

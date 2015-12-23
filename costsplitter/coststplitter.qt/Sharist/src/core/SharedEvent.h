@@ -32,7 +32,7 @@ public:
     void SetEventName(string name);
     double* Optimize();
     double* Optimize(double* input);
-	void Print();
+    string Print();
 	~SharedEvent();
 };
 

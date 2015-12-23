@@ -1,7 +1,9 @@
 ﻿#include "SharedEvent.h"
 #include <cmath>
+#include <string>
+#include <sstream>
 
-int SharedEvent::size = 10;
+int SharedEvent::size = 5;
 double SharedEvent::growthCoefficient = 2;
 
 SharedEvent::SharedEvent(string name){
@@ -77,6 +79,17 @@ double* SharedEvent::Optimize(double* input){
 }
 
 double* SharedEvent::Optimize(){
+    //TODO: cover with idenmotancy tests
+    //clearing balance vector
+    for(int i=0;i<size;i++){
+        balanceVector[i]=0;
+    }
+    //clearing optimized map
+    for(int i=0;i<size*size;i++){
+        optimizedMap[i]=0;
+    }
+
+
 	//calculating balance vector
 	for (int i = 0; i < size; i++){
 		for (int j = 0; j < size; j++){
@@ -126,11 +139,19 @@ double* SharedEvent::Optimize(){
 	return optimizedMap;
 }
 
-void SharedEvent::Print(){
+string SharedEvent::Print(){
+    string toReturn;
+    std::ostringstream str;
     for (int i = 0; i < this->lastMemberOrder; i++){
         for (int j = 0; j < this->lastMemberOrder; j++){
             if (optimizedMap[i*size + j] == 0) continue;
-            printf("%s owes %s: %f \n", this->findMember(i)->Name.c_str(), this->findMember(j)->Name.c_str(), optimizedMap[i*size + j]);
+            str<<this->findMember(i)->Name;
+            str<<" owes ";
+            str<<this->findMember(j)->Name;
+            str<<": ";
+            str<<optimizedMap[i*size + j];
+            str<<"\n";
+            //printf("%s owes %s: %f \n", this->findMember(i)->Name.c_str(), this->findMember(j)->Name.c_str(), optimizedMap[i*size + j]);
         }
     }
 
@@ -147,7 +168,13 @@ void SharedEvent::Print(){
         totalSpent+=(**it).cost;
     }
 
-    printf("Total spent: %f\nTotal debt: %f", totalSpent, totalOwe);
+    str<<"\nTotal spent: ";
+    str<<totalSpent;
+    str<<"\nTotal debt: ";
+    str<<totalOwe;
+    //printf("Total spent: %f\nTotal debt: %f", totalSpent, totalOwe);
+    toReturn=str.str();
+    return toReturn;
 }
 
 void SharedEvent::dispose(){
