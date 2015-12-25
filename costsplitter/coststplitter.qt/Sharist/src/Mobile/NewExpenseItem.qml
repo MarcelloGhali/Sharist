@@ -23,11 +23,6 @@ Item{
             TextField {
                 id: textField1
                 text: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost
-                Binding{
-                    target: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem
-                    property: "cost"
-                    value: textField1.text
-                }
             }
         }
         Row {
@@ -105,8 +100,13 @@ Item{
                 text: "Save"
                 onClicked: {
                     if (navigator){
-                        eventsModel.selectedSharedEvent.addExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
-                        navigator.pop()
+                        //check cost value
+                        var costVal = textField1.text;
+                        if (costVal!="" && costVal>0){
+                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost = costVal;
+                            eventsModel.selectedSharedEvent.addExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
+                            navigator.pop()
+                        }
                     }
                 }
             }

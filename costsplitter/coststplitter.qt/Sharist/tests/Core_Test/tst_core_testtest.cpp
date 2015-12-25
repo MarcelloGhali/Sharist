@@ -1,6 +1,6 @@
+#include <cstdio>
 #include <QString>
 #include <QtTest>
-#include <cstdio>
 #include "SharedEvent.h"
 
 class Core_Test : public QObject
@@ -155,7 +155,35 @@ void Core_Test::sharedevent_should_return_correct_optimization2(){
 }
 
 void Core_Test::sharedevent_optimize_should_be_idempotent(){
-
+    //setup
+        Member marat("Marat");
+        Member alex("Alex");
+        Member ruslan("Ruslan");
+        vector<const Member*> maratMembers;
+        maratMembers.push_back(&alex);
+        maratMembers.push_back(&ruslan);
+        vector<const Member*> ruslanMembers;
+        ruslanMembers.push_back(&alex);
+        ruslanMembers.push_back(&marat);
+        ExpenseItem err(143.44, &marat, 0, &maratMembers);
+        ExpenseItem lodge(321, &ruslan, 0, &ruslanMembers);
+        SharedEvent canada("canada");
+        canada.AddMember(&marat);
+        canada.AddMember(&alex);
+        canada.AddMember(&ruslan);
+        canada.AddExpenseItem(&err);
+        canada.AddExpenseItem(&lodge);
+        //expected
+        double maratOweRuslan = 11.373333333333335;
+        double alexOweRuslan = 154.81333333333333;
+        //test
+        double* results = canada.Optimize();
+        canada.Optimize();
+        canada.Optimize();
+        int size = canada.GetCapacity();
+        //adding new users
+        QVERIFY(results[0*size + 2] == maratOweRuslan);
+        QVERIFY(results[1*size + 2] == alexOweRuslan);
 }
 
 QTEST_APPLESS_MAIN(Core_Test)
