@@ -10,6 +10,7 @@ class MemberModel : public QObject
 public:
     MemberModel(QObject *parent = 0);
     MemberModel(const Member* member);
+    ~MemberModel();
     Q_PROPERTY(bool selected READ selected WRITE setSelected NOTIFY selectedChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     bool selected();

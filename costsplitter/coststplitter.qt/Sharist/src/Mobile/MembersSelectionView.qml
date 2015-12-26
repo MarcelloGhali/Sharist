@@ -63,7 +63,7 @@ Item {
                         if (isMultiselect)
                             eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid = eventsModel.selectedSharedEvent.memberList;
                         else
-                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner = eventsModel.selectedSharedEvent.memberList.getFirstSelected();
+                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner = eventsModel.selectedSharedEvent.memberList.firstSelected;
                         navigator.pop()
                     }
                 }

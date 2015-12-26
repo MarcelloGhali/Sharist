@@ -1,14 +1,15 @@
 #include "MemberModel.h"
 
-MemberModel::MemberModel(QObject *parent) :
-    QObject(parent){
-    this->rawMember = NULL;
-    this->_isSelected = false;
+MemberModel::MemberModel(QObject *parent){
+
 }
 
 MemberModel::MemberModel(const Member *member){
     this->rawMember = member;
     this->_isSelected = false;
+}
+
+MemberModel::~MemberModel(){
 }
 
 bool MemberModel::selected(){
@@ -29,3 +30,4 @@ QString MemberModel::name(){
 const Member* MemberModel::getRawMember(){
     return this->rawMember;
 }
+

@@ -5,11 +5,14 @@ MemberListModel::MemberListModel(QObject *parent) :
     QAbstractListModel(parent){
 }
 
+MemberListModel::~MemberListModel(){
+}
+
 int MemberListModel::rowCount(const QModelIndex &parent) const{
     return this->memberModels.size();
 }
 
-void MemberListModel::deselect(int i){
+void MemberListModel::deselect(){
     for(QList<MemberModel*>::Iterator it = this->memberModels.begin();it!=this->memberModels.end(); it++){
         MemberModel* member = *it;
         member->setSelected(false);
@@ -20,9 +23,9 @@ void MemberListModel::deselect(int i){
     emit dataChanged(start, end);
 }
 
-MemberModel* MemberListModel::getFirstSelected(){
+MemberModel* MemberListModel::firstSelected(){
     //TODO:: memoryManagement
-    MemberModel* toReturn = new MemberModel;
+    MemberModel* toReturn;
     for(QList<MemberModel*>::Iterator it = this->memberModels.begin();it!=this->memberModels.end(); it++){
         MemberModel* member = *it;
         if (member->selected()){

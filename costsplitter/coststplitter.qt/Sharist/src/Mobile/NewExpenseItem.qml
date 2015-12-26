@@ -105,6 +105,7 @@ Item{
                         if (costVal!="" && costVal>0){
                             eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost = costVal;
                             eventsModel.selectedSharedEvent.addExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
+                            eventsModel.selectedSharedEvent.memberList.deselect();
                             navigator.pop()
                         }
                     }
