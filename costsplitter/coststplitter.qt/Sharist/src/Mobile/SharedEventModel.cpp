@@ -42,3 +42,11 @@ ExpenseItemListModel* SharedEventModel::expenseList(){
 MemberListModel* SharedEventModel::memberList(){
     return this->memberListModel;
 }
+
+void SharedEventModel::addMember(QString name){
+    //TODO: memory management
+    Member* member = new Member(name.toStdString());
+    this->rawSharedEvent->AddMember(member);
+    MemberModel* memberModel = new MemberModel(member);
+    this->memberListModel->addMember(memberModel);
+}

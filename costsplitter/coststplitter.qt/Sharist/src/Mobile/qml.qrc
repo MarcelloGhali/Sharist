@@ -6,5 +6,6 @@
         <file>Base.qml</file>
         <file>NewExpenseItem.qml</file>
         <file>MembersSelectionView.qml</file>
+        <file>NewMember.qml</file>
     </qresource>
 </RCC>

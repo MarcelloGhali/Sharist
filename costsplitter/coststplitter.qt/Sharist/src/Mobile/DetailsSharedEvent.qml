@@ -54,6 +54,15 @@ Item{
                         navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
                 }
             }
+            Button{
+                id: addMemberBtn
+                text: "Add member"
+                onClicked: {
+                    if (navigator)
+                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
+                        navigator.push({item:Qt.resolvedUrl("NewMember.qml")})
+                }
+            }
         }
     }
 }

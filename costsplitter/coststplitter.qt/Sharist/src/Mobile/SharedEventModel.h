@@ -16,6 +16,7 @@ public:
     Q_PROPERTY(ExpenseItemListModel *expenseList READ expenseList NOTIFY expenseListChanged)
     Q_PROPERTY(MemberListModel *memberList READ memberList NOTIFY memberListChanged)
     Q_INVOKABLE void addExpenseItem(ExpenseItemModel* model);
+    Q_INVOKABLE void addMember(QString name);
     SharedEventModel(QObject *parent = 0);
     SharedEventModel(SharedEvent* rawSharedEvent);
     QString name() const;
