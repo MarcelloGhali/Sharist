@@ -6,6 +6,7 @@ Item {
     width: 320
     height: 400
     property bool isMultiselect
+    id:newExpenseItem
     Component {
        id: memberDelegate
        Item{

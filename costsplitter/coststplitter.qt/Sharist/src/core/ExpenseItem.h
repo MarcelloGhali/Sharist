@@ -1,20 +1,23 @@
 #ifndef EXPENSEITEM_H
 #define EXPENSEITEM_H
+#include <memory>
 #include <vector>
 #include "Member.h"
 
 using namespace::std;
 
-class ExpenseItem
-{
+class ExpenseItem{
 public:
 	double cost;
-	const Member* owner;
-	vector<const Member*>* coveredMembers;
-	vector<const Member*>* paid;
+    MemberPtr owner;
+    vector<MemberPtr> coveredMembers;
+    vector<MemberPtr> paid;
     ExpenseItem();
-	ExpenseItem(double cost, const Member* owner, vector<const Member*>* coveredMembers, vector<const Member*>* paid);
+    //TODO: redesign to avoid copy of vectors
+    ExpenseItem(double cost, const MemberPtr &owner, const vector<MemberPtr> &coveredMembers, const vector<MemberPtr> &paid);
 	~ExpenseItem();
 };
+
+typedef shared_ptr<ExpenseItem> ExpenseItemPtr;
 
 #endif

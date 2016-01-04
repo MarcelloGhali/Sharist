@@ -3,21 +3,18 @@
 
 using namespace::std;
 
-ExpenseItem::ExpenseItem(){
-    this->paid = new vector<const Member*>;
-    this->owner = NULL;
-    this->cost = 0;
+ExpenseItem::ExpenseItem():
+    paid(NULL),
+    owner(NULL),
+    cost(0){
 }
 
-ExpenseItem::ExpenseItem(double cost, const Member* owner, vector<const Member*>* coveredMembers, vector<const Member*>* paid)
-{
-	this->cost = cost;
-	this->owner = owner;
-	this->coveredMembers = coveredMembers;
-	this->paid = paid;
+ExpenseItem::ExpenseItem(double cost, const MemberPtr &owner, const vector<MemberPtr> &coveredMembers, const vector<MemberPtr> &paid):
+    cost(cost),
+    owner(owner),
+    coveredMembers(coveredMembers),
+    paid(paid){
 }
 
-ExpenseItem::~ExpenseItem()
-{
-
+ExpenseItem::~ExpenseItem(){
 }

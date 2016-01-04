@@ -2,30 +2,29 @@
 #include <vector>
 #include <map>
 
-class SharedEvent
-{
+class SharedEvent{
 private:
-	map<const Member*, int> membersMap;
-    vector<const Member*> members;
+    map<MemberPtr, int> membersMap;
+    vector<MemberPtr> members;
 	int lastMemberOrder;
     static int size;
     static double growthCoefficient;
+    //TODO: use vector instead
     double* expenseMap, *optimizedMap;
     double* balanceVector;
     string eventName;
     double* initVector(int n);
-	const Member* findMember(int index);
+    MemberPtr findMember(int index);
     void expand();
     void dispose();
 public:
     SharedEvent(string name);
-    vector<const ExpenseItem*> expenseItems;
-	void RemoveExpenseItem(const ExpenseItem* item);
-	void AddExpenseItem(const ExpenseItem* item);
-	void AddMember(const Member* newMember);
-	void RemoveMember(const Member* memberToRemove);
-    // TODO: get members
-    vector<const Member*>* GetMembers();
+    vector<ExpenseItemPtr> expenseItems;
+    void RemoveExpenseItem(const ExpenseItemPtr &item);
+    void AddExpenseItem(const ExpenseItemPtr &item);
+    void AddMember(const MemberPtr &newMember);
+    void RemoveMember(const MemberPtr &memberToRemove);
+    vector<MemberPtr>* GetMembers();
 	int GetCapacity();
 	int GetGrowthRate();
     string GetEventName();

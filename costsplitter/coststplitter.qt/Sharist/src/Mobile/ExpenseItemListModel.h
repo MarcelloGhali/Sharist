@@ -10,15 +10,18 @@ class ExpenseItemListModel : public QAbstractListModel
     Q_OBJECT
 public:
     ExpenseItemListModel(QObject *parent = 0);
+    ExpenseItemListModel(QObject *parent, vector<ExpenseItemPtr>* rawExpenses);
+    ~ExpenseItemListModel();
     Q_PROPERTY(ExpenseItemModel* currentExpenseItem READ currentExpenseItem NOTIFY currentExpenseItemChanged)
     Q_INVOKABLE void createTempExpense();
+    void Sync();
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    void AddExpenseItems(vector<const ExpenseItem*>* expenseVector);
-    void addExpenseItem(ExpenseItem* expenseItem);
     ExpenseItemModel* currentExpenseItem();
 private:
-    vector<const ExpenseItem*>* expenses;
+    QList<ExpenseItemModel*> expenseModels;
+    vector<ExpenseItemPtr>* rawExpenseItems;
+    //TODO: move to view model
     ExpenseItemModel* currentExpense;
 signals:
     void currentExpenseItemChanged();

@@ -8,7 +8,7 @@ void SharedEventListModel::addSharedEvent(const QString& eventName){
     beginInsertRows(QModelIndex(),rowCount(),rowCount());
     //todo: create new object in factory, so that they all garbage collected
     SharedEvent *rawSharedEvent = new SharedEvent(eventName.toStdString());
-    SharedEventModel *newModel = new SharedEventModel(rawSharedEvent);
+    SharedEventModel *newModel = new SharedEventModel(this, rawSharedEvent);
     sharedEvents.append(newModel);
     endInsertRows();
 }
@@ -20,6 +20,7 @@ void SharedEventListModel::addSharedEvent(SharedEventModel* newModel){
 }
 
 int SharedEventListModel::rowCount(const QModelIndex &parent) const{
+    Q_UNUSED(parent);
     return sharedEvents.count();
 }
 

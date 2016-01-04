@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import Sharist.Models 1.0
 
 Item{
+    id:newExpenseItem
     width: 320
     height: 400
     Column {
@@ -104,7 +105,7 @@ Item{
                         var costVal = textField1.text;
                         if (costVal!="" && costVal>0){
                             eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost = costVal;
-                            eventsModel.selectedSharedEvent.addExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
+                            eventsModel.selectedSharedEvent.AddExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
                             eventsModel.selectedSharedEvent.memberList.deselect();
                             navigator.pop()
                         }

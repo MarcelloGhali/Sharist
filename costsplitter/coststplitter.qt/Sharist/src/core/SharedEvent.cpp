@@ -6,12 +6,12 @@
 int SharedEvent::size = 5;
 double SharedEvent::growthCoefficient = 2;
 
-SharedEvent::SharedEvent(string name){
-    eventName = name;
-    expenseMap = initVector(size*size);
-    optimizedMap = initVector(size*size);
-	balanceVector = initVector(size);
-	lastMemberOrder = 0;
+SharedEvent::SharedEvent(string name):
+    eventName(name),
+    expenseMap(initVector(size*size)),
+    optimizedMap(initVector(size*size)),
+    balanceVector(initVector(size)),
+    lastMemberOrder(0){
 }
 
 SharedEvent::~SharedEvent(){
@@ -34,9 +34,9 @@ int SharedEvent::GetGrowthRate(){
 	return this->growthCoefficient;
 }
 
-void SharedEvent::AddExpenseItem(const ExpenseItem* item){
+void SharedEvent::AddExpenseItem(const ExpenseItemPtr &item){
 	// TODO : we currently don't support members in a group
-	int splitNumber = item->paid->size() + 1;
+    int splitNumber = item->paid.size() + 1;
 	double share = item->cost / splitNumber;
 	// TODO : add validation. Currently users needs to be added prior to adding an expense item
 //	if (areNewPeopleAdded(item)){
@@ -45,32 +45,33 @@ void SharedEvent::AddExpenseItem(const ExpenseItem* item){
 
 	// TODO: validation
 	int ownerIndex = membersMap[item->owner];
-	for (vector<const Member*>::iterator it = item->paid->begin(); it < item->paid->end(); it++){
-		int paidForMemberIndex = membersMap[*it];
+    for (vector<MemberPtr>::iterator it = item->paid.begin(); it < item->paid.end(); it++){
+        int paidForMemberIndex = membersMap[*it];
         this->expenseMap[paidForMemberIndex*size + ownerIndex] += share;
 	}
+
     expenseItems.push_back(item);
 }
 
 //TODO:implement expense item removal
-void SharedEvent::RemoveExpenseItem(const ExpenseItem* item){
-    vector<const ExpenseItem*>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
+void SharedEvent::RemoveExpenseItem(const ExpenseItemPtr &item){
+    vector<ExpenseItemPtr>::iterator pos = find(expenseItems.begin(), expenseItems.end(), item);
 	expenseItems.erase(pos);
 }
 
 //TODO:implememnt remove member 
-void SharedEvent::RemoveMember(const Member* memberToRemove){
+void SharedEvent::RemoveMember(const MemberPtr &memberToRemove){
 	membersMap.erase(memberToRemove);
 }
 
-void SharedEvent::AddMember(const Member* newMember){
+void SharedEvent::AddMember(const MemberPtr &newMember){
 	// it is time to grow
 	// TODO: add option to re-calculate certain expenses
 	if (lastMemberOrder == size){
         expand();
 	}
     members.push_back(newMember);
-	membersMap.insert(std::pair<const Member*, int>(newMember, lastMemberOrder++));
+    membersMap.insert(std::pair<MemberPtr, int>(newMember, lastMemberOrder++));
 }
 
 double* SharedEvent::Optimize(double* input){
@@ -164,7 +165,7 @@ string SharedEvent::Print(){
 
     // TODO: define what is total spend and total debt
     totalSpent=0;
-    for(vector<const ExpenseItem*>::iterator it=expenseItems.begin(); it!=expenseItems.end();it++){
+    for(vector<ExpenseItemPtr>::iterator it=expenseItems.begin(); it!=expenseItems.end();it++){
         totalSpent+=(**it).cost;
     }
 
@@ -204,8 +205,8 @@ void SharedEvent::expand(){
     size = newSize;
 }
 
-const Member* SharedEvent::findMember(int index){
-    for (map<const Member*, int>::iterator it = this->membersMap.begin(); it != this->membersMap.end(); it++){
+MemberPtr SharedEvent::findMember(int index) {
+    for (map<MemberPtr, int>::iterator it = this->membersMap.begin(); it != this->membersMap.end(); it++){
         if (it->second == index){
             return it->first;
         }
@@ -224,6 +225,6 @@ double* SharedEvent::initVector(int n){
     return toReturn;
 }
 
-vector<const Member*>* SharedEvent::GetMembers(){
+vector<MemberPtr>* SharedEvent::GetMembers(){
     return &members;
 }

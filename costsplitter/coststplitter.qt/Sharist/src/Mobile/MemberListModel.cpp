@@ -5,10 +5,38 @@ MemberListModel::MemberListModel(QObject *parent) :
     QAbstractListModel(parent){
 }
 
+MemberListModel::MemberListModel(QObject *parent, vector<MemberPtr>* members):
+    QAbstractListModel(parent),
+    rawMembers(members){
+    this->Sync();
+}
+
 MemberListModel::~MemberListModel(){
 }
 
+void MemberListModel::Sync(){
+    for(vector<MemberPtr>::iterator it=this->rawMembers->begin(); it!=this->rawMembers->end(); it++){
+        MemberPtr rawMember = *it;
+        bool isFound = false;
+        for(QList<MemberModel*>::iterator itM=this->memberModels.begin(); itM!=this->memberModels.end() && !isFound; itM++){
+            MemberModel* memberModel = *itM;
+            if (rawMember==memberModel->getRawMember()){
+                isFound = true;
+            }
+        }
+
+        if (!isFound){
+            //TODO:memory management
+            MemberModel* newModel = new MemberModel(this,*it);
+            this->beginInsertRows(QModelIndex(),rowCount(),rowCount());
+            this->memberModels.append(newModel);
+            this->endInsertRows();
+        }
+    }
+}
+
 int MemberListModel::rowCount(const QModelIndex &parent) const{
+    Q_UNUSED(parent);
     return this->memberModels.size();
 }
 
@@ -64,12 +92,6 @@ QVariant MemberListModel::data(const QModelIndex &index, int role) const{
     }
 
     return QVariant();
-}
-
-void MemberListModel::addMember(MemberModel *model){
-    this->beginInsertRows(QModelIndex(),1,1);
-    this->memberModels.push_back(model);
-    this->endInsertRows();
 }
 
 bool MemberListModel::setData(const QModelIndex &index, const QVariant &value, int role){

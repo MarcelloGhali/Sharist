@@ -1,12 +1,13 @@
 #include "MemberModel.h"
 
 MemberModel::MemberModel(QObject *parent){
-
+    Q_UNUSED(parent);
 }
 
-MemberModel::MemberModel(const Member *member){
-    this->rawMember = member;
-    this->_isSelected = false;
+MemberModel::MemberModel(QObject *parent, MemberPtr member):
+    QObject(parent),
+    rawMember(member),
+    _isSelected(false){
 }
 
 MemberModel::~MemberModel(){
@@ -27,7 +28,7 @@ QString MemberModel::name(){
         return QString();
 }
 
-const Member* MemberModel::getRawMember(){
+MemberPtr MemberModel::getRawMember(){
     return this->rawMember;
 }
 

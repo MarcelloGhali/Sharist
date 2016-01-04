@@ -34,7 +34,7 @@ Item{
                 id: addMemberBtn
                 text: "Save"
                 onClicked: {
-                    eventsModel.selectedSharedEvent.addMember(memberName.text)
+                    eventsModel.selectedSharedEvent.AddMember(memberName.text)
                     if (navigator){
                         navigator.pop()
                     }

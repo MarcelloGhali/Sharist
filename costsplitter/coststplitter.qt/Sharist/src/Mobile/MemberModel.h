@@ -9,17 +9,17 @@ class MemberModel : public QObject
     Q_OBJECT
 public:
     MemberModel(QObject *parent = 0);
-    MemberModel(const Member* member);
+    MemberModel(QObject *parent, MemberPtr member);
     ~MemberModel();
     Q_PROPERTY(bool selected READ selected WRITE setSelected NOTIFY selectedChanged)
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     bool selected();
     void setSelected(bool isSelected);
     QString name();
-    const Member* getRawMember();
+    MemberPtr getRawMember();
 private:
     bool _isSelected;
-    const Member* rawMember;
+    MemberPtr rawMember;
 signals:
     void selectedChanged();
     void nameChanged();

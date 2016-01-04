@@ -27,3 +27,5 @@ unix {
 }
 
 QMAKE_MAC_SDK = macosx10.11
+
+CONFIG += c++11

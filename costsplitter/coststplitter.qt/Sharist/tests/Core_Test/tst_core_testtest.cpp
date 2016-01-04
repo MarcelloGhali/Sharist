@@ -3,8 +3,7 @@
 #include <QtTest>
 #include "SharedEvent.h"
 
-class Core_Test : public QObject
-{
+class Core_Test : public QObject{
     Q_OBJECT
 
 public:
@@ -18,63 +17,55 @@ private Q_SLOTS:
     void sharedevent_optimize_should_be_idempotent();
 };
 
-Core_Test::Core_Test()
-{
+Core_Test::Core_Test(){
 }
 
-void Core_Test::sharedevent_should_expand_if_new_members_added()
-{
-    Member marat("Marat");
-    Member alex("Alex");
-    Member slava("Slava");
-    vector<const Member*> maratMembers;
-    maratMembers.push_back(&alex);
-    maratMembers.push_back(&slava);
-    ExpenseItem gas(100, &marat, 0, &maratMembers);
+void Core_Test::sharedevent_should_expand_if_new_members_added(){
+    MemberPtr maratP(new Member("Marat"));
+    MemberPtr alexP(new Member("Alex"));
+    MemberPtr slavaP(new Member("Slava"));
+    vector<MemberPtr> maratMembers;
+    maratMembers.push_back(alexP);
+    maratMembers.push_back(slavaP);
+    ExpenseItemPtr gasP(new ExpenseItem(100, maratP, vector<MemberPtr>(), maratMembers));
     SharedEvent oregon("oregon");
-    oregon.AddMember(&marat);
-    oregon.AddMember(&alex);
-    oregon.AddMember(&slava);
-    oregon.AddExpenseItem(&gas);
+    oregon.AddMember(maratP);
+    oregon.AddMember(alexP);
+    oregon.AddMember(slavaP);
+    oregon.AddExpenseItem(gasP);
     oregon.Optimize();
     int countResults = oregon.GetCapacity();
     //adding new users
-    vector<const Member*> tmpMembers;
     int k=2;
     for (int i = 0; i < countResults*k; i++){
-        const Member *tmpMember = new Member("test");
-        tmpMembers.push_back(tmpMember);
+        MemberPtr tmpMember(new Member("test"));
         oregon.AddMember(tmpMember);
     }
     //check
     oregon.Optimize();
     int countExpandedResults = oregon.GetCapacity();
     QVERIFY(countResults*k*oregon.GetGrowthRate()==countExpandedResults);
-    //cleanup
-    for (vector<const Member*>::iterator it = tmpMembers.begin(); it < tmpMembers.end(); it++){
-        delete *it;
-    }
 }
 
 void Core_Test::sharedevent_should_return_correct_optimization(){
-    //setup
-        Member marat("Marat");
-        Member alex("Alex");
-        Member slava("Slava");
-        vector<const Member*> maratMembers;
-        maratMembers.push_back(&alex);
-        maratMembers.push_back(&slava);
-        vector<const Member*> slavaMembers;
-        slavaMembers.push_back(&alex);
-        slavaMembers.push_back(&marat);
-        ExpenseItem gas(90, &marat, 0, &maratMembers);
-        ExpenseItem food(120, &slava, 0, &slavaMembers);
+        //setup
+        MemberPtr maratP(new Member("Marat"));
+        MemberPtr alexP(new Member("Alex"));
+        MemberPtr slavaP(new Member("Slava"));
+        vector<MemberPtr> maratMembers;
+        maratMembers.push_back(alexP);
+        maratMembers.push_back(slavaP);
+        vector<MemberPtr> slavaMembers;
+        slavaMembers.push_back(alexP);
+        slavaMembers.push_back(maratP);
+        ExpenseItemPtr gasP(new ExpenseItem(90, maratP, vector<MemberPtr>(), maratMembers));
+        ExpenseItemPtr foodP(new ExpenseItem(120, slavaP, vector<MemberPtr>(), slavaMembers));
         SharedEvent oregon("oregon");
-        oregon.AddMember(&marat);
-        oregon.AddMember(&alex);
-        oregon.AddMember(&slava);
-        oregon.AddExpenseItem(&gas);
-        oregon.AddExpenseItem(&food);
+        oregon.AddMember(maratP);
+        oregon.AddMember(alexP);
+        oregon.AddMember(slavaP);
+        oregon.AddExpenseItem(gasP);
+        oregon.AddExpenseItem(foodP);
         //expected
         double alexOweSlava = 50;
         double alexOweMarat = 20;
@@ -88,25 +79,25 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
 
 void Core_Test::sharedevent_should_return_correct_optimization1(){
     //setup
-        Member marat("Marat");
-        Member alex("Alex");
-        Member ruslan("Ruslan");
-        vector<const Member*> maratMembers;
-        maratMembers.push_back(&alex);
-        maratMembers.push_back(&ruslan);
-        vector<const Member*> ruslanMembers;
-        ruslanMembers.push_back(&alex);
-        ruslanMembers.push_back(&marat);
-        ExpenseItem gas(87.07, &marat, 0, &maratMembers);
-        ExpenseItem food(126.91, &marat, 0, &maratMembers);
-        ExpenseItem camping(25, &ruslan, 0, &ruslanMembers);
+        MemberPtr maratP(new Member("Marat"));
+        MemberPtr alexP(new Member("Alex"));
+        MemberPtr ruslanP(new Member("Ruslan"));
+        vector<MemberPtr> maratMembers;
+        maratMembers.push_back(alexP);
+        maratMembers.push_back(ruslanP);
+        vector<MemberPtr> ruslanMembers;
+        ruslanMembers.push_back(alexP);
+        ruslanMembers.push_back(maratP);
+        ExpenseItemPtr gasP(new ExpenseItem(87.07, maratP, vector<MemberPtr>(), maratMembers));
+        ExpenseItemPtr foodP(new ExpenseItem(126.91, maratP, vector<MemberPtr>(), maratMembers));
+        ExpenseItemPtr campingP(new ExpenseItem(25, ruslanP, vector<MemberPtr>(), ruslanMembers));
         SharedEvent oregon("oregon");
-        oregon.AddMember(&marat);
-        oregon.AddMember(&alex);
-        oregon.AddMember(&ruslan);
-        oregon.AddExpenseItem(&gas);
-        oregon.AddExpenseItem(&food);
-        oregon.AddExpenseItem(&camping);
+        oregon.AddMember(maratP);
+        oregon.AddMember(alexP);
+        oregon.AddMember(ruslanP);
+        oregon.AddExpenseItem(gasP);
+        oregon.AddExpenseItem(foodP);
+        oregon.AddExpenseItem(campingP);
         //expected
         double alexOweMarat = 79.660000;
         double ruslanOweMarat = 54.660000;
@@ -119,30 +110,24 @@ void Core_Test::sharedevent_should_return_correct_optimization1(){
 }
 
 void Core_Test::sharedevent_should_return_correct_optimization2(){
-    //setup
-        Member marat("Marat");
-        Member alex("Alex");
-        Member ruslan("Ruslan");
-        vector<const Member*> maratMembers;
-        maratMembers.push_back(&alex);
-        maratMembers.push_back(&ruslan);
-        vector<const Member*> ruslanMembers;
-        ruslanMembers.push_back(&alex);
-        ruslanMembers.push_back(&marat);
-//        ExpenseItem gas(45, &marat, 0, &maratMembers);
-//        ExpenseItem alco(30, &marat, 0, &maratMembers);
-//        ExpenseItem grocery(68.44, &marat, 0, &maratMembers);
-        ExpenseItem err(143.44, &marat, 0, &maratMembers);
-        ExpenseItem lodge(321, &ruslan, 0, &ruslanMembers);
+        //setup
+        MemberPtr maratP(new Member("Marat"));
+        MemberPtr alexP(new Member("Alex"));
+        MemberPtr ruslanP(new Member("Ruslan"));
+        vector<MemberPtr> maratMembers;
+        maratMembers.push_back(alexP);
+        maratMembers.push_back(ruslanP);
+        vector<MemberPtr> ruslanMembers;
+        ruslanMembers.push_back(alexP);
+        ruslanMembers.push_back(maratP);
+        ExpenseItemPtr errP(new ExpenseItem(143.44, maratP, vector<MemberPtr>(), maratMembers));
+        ExpenseItemPtr lodgeP(new ExpenseItem(321, ruslanP, vector<MemberPtr>(), ruslanMembers));
         SharedEvent canada("canada");
-        canada.AddMember(&marat);
-        canada.AddMember(&alex);
-        canada.AddMember(&ruslan);
-        canada.AddExpenseItem(&err);
-//        canada.AddExpenseItem(&gas);
-//        canada.AddExpenseItem(&alco);
-//        canada.AddExpenseItem(&grocery);
-        canada.AddExpenseItem(&lodge);
+        canada.AddMember(maratP);
+        canada.AddMember(alexP);
+        canada.AddMember(ruslanP);
+        canada.AddExpenseItem(errP);
+        canada.AddExpenseItem(lodgeP);
         //expected
         double maratOweRuslan = 11.373333333333335;
         double alexOweRuslan = 154.81333333333333;
@@ -155,24 +140,24 @@ void Core_Test::sharedevent_should_return_correct_optimization2(){
 }
 
 void Core_Test::sharedevent_optimize_should_be_idempotent(){
-    //setup
-        Member marat("Marat");
-        Member alex("Alex");
-        Member ruslan("Ruslan");
-        vector<const Member*> maratMembers;
-        maratMembers.push_back(&alex);
-        maratMembers.push_back(&ruslan);
-        vector<const Member*> ruslanMembers;
-        ruslanMembers.push_back(&alex);
-        ruslanMembers.push_back(&marat);
-        ExpenseItem err(143.44, &marat, 0, &maratMembers);
-        ExpenseItem lodge(321, &ruslan, 0, &ruslanMembers);
+        //setup
+        MemberPtr maratP(new Member("Marat"));
+        MemberPtr alexP(new Member("Alex"));
+        MemberPtr ruslanP(new Member("Ruslan"));
+        vector<MemberPtr> maratMembers;
+        maratMembers.push_back(alexP);
+        maratMembers.push_back(ruslanP);
+        vector<MemberPtr> ruslanMembers;
+        ruslanMembers.push_back(alexP);
+        ruslanMembers.push_back(maratP);
+        ExpenseItemPtr errP(new ExpenseItem(143.44, maratP, vector<MemberPtr>(), maratMembers));
+        ExpenseItemPtr lodgeP(new ExpenseItem(321, ruslanP, vector<MemberPtr>(), ruslanMembers));
         SharedEvent canada("canada");
-        canada.AddMember(&marat);
-        canada.AddMember(&alex);
-        canada.AddMember(&ruslan);
-        canada.AddExpenseItem(&err);
-        canada.AddExpenseItem(&lodge);
+        canada.AddMember(maratP);
+        canada.AddMember(alexP);
+        canada.AddMember(ruslanP);
+        canada.AddExpenseItem(errP);
+        canada.AddExpenseItem(lodgeP);
         //expected
         double maratOweRuslan = 11.373333333333335;
         double alexOweRuslan = 154.81333333333333;

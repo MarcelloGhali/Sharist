@@ -16,19 +16,21 @@ public:
         NameRole=Qt::UserRole+2
     };
     MemberListModel(QObject *parent = 0);
+    MemberListModel(QObject *parent, vector<MemberPtr>* members);
     ~MemberListModel();
     Q_INVOKABLE void deselect();
-    QList<MemberModel*>* getSelected();
     Q_PROPERTY(MemberModel* firstSelected READ firstSelected NOTIFY firstSelectedChanged)
+    void Sync();
+    QList<MemberModel*>* getSelected();
     MemberModel* firstSelected();
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    void addMember(MemberModel* model);
     bool setData(const QModelIndex &index, const QVariant &value, int role);
 protected:
     QHash<int,QByteArray> roleNames() const;
 private:
     QList<MemberModel*> memberModels;
+    vector<MemberPtr>* rawMembers;
 signals:
     void firstSelectedChanged();
 public slots:

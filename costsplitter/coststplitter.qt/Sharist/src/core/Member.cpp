@@ -1,12 +1,9 @@
 //#include "stdafx.h"
 #include "Member.h"
 
-Member::Member(string name)
-{
-	this->Name = name;
+Member::Member(string name):
+    Name(name){
 }
 
-
-Member::~Member()
-{
+Member::~Member(){
 }

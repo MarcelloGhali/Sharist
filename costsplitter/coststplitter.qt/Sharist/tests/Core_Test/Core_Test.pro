@@ -9,6 +9,7 @@ QT       += testlib
 QT       -= gui
 
 TARGET = tst_core_testtest
+CONFIG  +=c++11
 CONFIG   += console
 CONFIG   -= app_bundle
 

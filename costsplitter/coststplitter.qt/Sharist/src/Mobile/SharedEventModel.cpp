@@ -3,26 +3,26 @@
 SharedEventModel::SharedEventModel(QObject *parent)
     :QObject(parent){}
 
-SharedEventModel::SharedEventModel(SharedEvent* rawSharedEvent){
-    this->rawSharedEvent = rawSharedEvent;
-    //TODO: manage memory allocation
-    this->expensesListModel = new ExpenseItemListModel;
-    this->expensesListModel->AddExpenseItems(&(rawSharedEvent->expenseItems));
-    // TODO: manage memory properly
-    vector<const Member*>* members = this->rawSharedEvent->GetMembers();
-    this->memberListModel = new MemberListModel;
-    if (members->size()>0){
-        for(vector<const Member*>::iterator it=members->begin(); it!=members->end(); it++){
-            this->memberListModel->addMember(new MemberModel(*it));
-        }
-    }
+SharedEventModel::SharedEventModel(QObject* parent, SharedEvent* rawSharedEvent):
+    QObject(parent),
+    rawSharedEvent(rawSharedEvent),
+    //TODO: make API consistent
+    expensesListModel(this, &(rawSharedEvent->expenseItems)),
+    memberListModel(this, rawSharedEvent->GetMembers()){
 }
 
-void SharedEventModel::addExpenseItem(ExpenseItemModel *model){
-    ExpenseItem* item = model->getRawExpenseItem();
+void SharedEventModel::AddExpenseItem(ExpenseItemModel *model){
+    ExpenseItemPtr item = model->getRawExpenseItem();
     this->rawSharedEvent->AddExpenseItem(item);
-    resultChanged();
+    expensesListModel.Sync();
     expenseListChanged();
+    resultChanged();
+}
+
+void SharedEventModel::AddMember(QString name){
+    MemberPtr memberPtr(new Member(name.toStdString()));
+    this->rawSharedEvent->AddMember(memberPtr);
+    memberListModel.Sync();
 }
 
 QString SharedEventModel::result(){
@@ -36,17 +36,10 @@ QString SharedEventModel::name() const{
 }
 
 ExpenseItemListModel* SharedEventModel::expenseList(){
-    return this->expensesListModel;
+    return &(this->expensesListModel);
 }
 
 MemberListModel* SharedEventModel::memberList(){
-    return this->memberListModel;
+    return &(this->memberListModel);
 }
 
-void SharedEventModel::addMember(QString name){
-    //TODO: memory management
-    Member* member = new Member(name.toStdString());
-    this->rawSharedEvent->AddMember(member);
-    MemberModel* memberModel = new MemberModel(member);
-    this->memberListModel->addMember(memberModel);
-}

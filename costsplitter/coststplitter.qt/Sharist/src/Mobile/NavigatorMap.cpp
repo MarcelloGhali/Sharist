@@ -1,6 +1,7 @@
 #include "NavigatorMap.h"
 
 NavigatorMap::NavigatorMap(QObject *parent){
+    Q_UNUSED(parent);
     map.insert("ListSharedEvent.Details","DetailsSharedEvent.qml");
     map.insert("ListSharedEvent.New","NewSharedEvent.qml");
 }

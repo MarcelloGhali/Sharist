@@ -12,7 +12,7 @@ class ExpenseItemModel : public QObject
     Q_OBJECT
 public:
     ExpenseItemModel(QObject *parent = 0);
-    ExpenseItemModel(ExpenseItem* expense);
+    ExpenseItemModel(QObject *parent, const ExpenseItemPtr &expense);
     Q_PROPERTY(double cost READ cost WRITE setCost NOTIFY costChanged)
     Q_PROPERTY(MemberModel* owner READ owner WRITE setOwner NOTIFY ownerChanged)
     Q_PROPERTY(MemberListModel* paid READ paid WRITE setPaid NOTIFY paidChanged)
@@ -22,9 +22,9 @@ public:
     void setCost(double value);
     void setOwner(MemberModel* members);
     void setPaid(MemberListModel* members);
-    ExpenseItem* getRawExpenseItem();
+    ExpenseItemPtr getRawExpenseItem();
 private:
-    ExpenseItem* rawExpenseItem;
+    ExpenseItemPtr rawExpenseItem;
 signals:
     void costChanged();
     void ownerChanged();

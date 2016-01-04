@@ -3,34 +3,28 @@
 
 ExpenseItemModel::ExpenseItemModel(QObject *parent) :
     QObject(parent){
-    //TODO:: memory management
-    this->rawExpenseItem = new ExpenseItem;
+    ExpenseItemPtr newItemP(new ExpenseItem);
+    this->rawExpenseItem = newItemP;
 }
 
-ExpenseItemModel::ExpenseItemModel(ExpenseItem *expense){
-    this->rawExpenseItem = expense;
+ExpenseItemModel::ExpenseItemModel(QObject* parent, const ExpenseItemPtr &expense):
+    QObject(parent),
+    rawExpenseItem(expense){
 }
 
 MemberListModel* ExpenseItemModel::paid(){
-    MemberListModel* listModels = new MemberListModel;
-    for(vector<const Member*>::iterator it = this->rawExpenseItem->paid->begin(); it!=this->rawExpenseItem->paid->end(); it++){
-        MemberModel* model = new MemberModel(*it);
-        listModels->addMember(model);
-    }
-
+    MemberListModel* listModels = new MemberListModel(this, &(this->rawExpenseItem->paid));
     return listModels;
 }
 
 void ExpenseItemModel::setPaid(MemberListModel* members){
     //clear all there was before
-    delete this->rawExpenseItem->paid;
-    this->rawExpenseItem->paid = new vector<const Member*>;
-
+    this->rawExpenseItem->paid.clear();
     QList<MemberModel*>* models = members->getSelected();
     for(QList<MemberModel*>::iterator it=models->begin(); it!=models->end(); it++){
         MemberModel* model = *it;
         if(model->selected()){
-            this->rawExpenseItem->paid->push_back(model->getRawMember());
+            this->rawExpenseItem->paid.push_back(model->getRawMember());
         }
     }
 
@@ -38,7 +32,7 @@ void ExpenseItemModel::setPaid(MemberListModel* members){
 }
 
 MemberModel* ExpenseItemModel::owner(){
-    MemberModel* model = new MemberModel(this->rawExpenseItem->owner);
+    MemberModel* model = new MemberModel(this, this->rawExpenseItem->owner);
     return model;
 }
 
@@ -58,6 +52,6 @@ void ExpenseItemModel::setCost(double value){
     }
 }
 
-ExpenseItem* ExpenseItemModel::getRawExpenseItem(){
+ExpenseItemPtr ExpenseItemModel::getRawExpenseItem(){
     return this->rawExpenseItem;
 }
