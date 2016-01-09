@@ -26,6 +26,12 @@ unix {
     INSTALLS += target
 }
 
-QMAKE_MAC_SDK = macosx10.11
+mac {
+    QMAKE_MAC_SDK = macosx10.11
+}
+
+ios {
+    QMAKE_MAC_SDK = iphoneos9.2
+}
 
 CONFIG += c++11

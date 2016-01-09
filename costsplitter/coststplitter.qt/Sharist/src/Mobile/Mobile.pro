@@ -37,4 +37,14 @@ HEADERS += \
 
 CONFIG += c++11
 
-QMAKE_MAC_SDK = macosx10.11
+mac {
+    QMAKE_MAC_SDK = macosx10.11
+}
+
+ios {
+    QMAKE_MAC_SDK = iphoneos9.2
+    QMAKE_INFO_PLIST = Info.plist
+}
+
+DISTFILES += \
+    Info.plist

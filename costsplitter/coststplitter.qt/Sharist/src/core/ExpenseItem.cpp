@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include "ExpenseItem.h"
 
 using namespace::std;
