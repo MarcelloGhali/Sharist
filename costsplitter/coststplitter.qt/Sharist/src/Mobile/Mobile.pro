@@ -33,7 +33,8 @@ HEADERS += \
     ExpenseItemListModel.h \
     MemberModel.h \
     ExpenseItemModel.h \
-    MemberListModel.h
+    MemberListModel.h \
+    ISyncListModel.h
 
 CONFIG += c++11
 

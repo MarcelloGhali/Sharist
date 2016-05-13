@@ -4,8 +4,9 @@
 #include <QAbstractListModel>
 #include "ExpenseItemModel.h"
 #include "ExpenseItem.h"
+#include "ISyncListModel.h"
 
-class ExpenseItemListModel : public QAbstractListModel
+class ExpenseItemListModel : public QAbstractListModel, ISyncListModel
 {
     Q_OBJECT
 public:

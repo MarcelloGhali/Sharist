@@ -6,8 +6,9 @@
 #include <QList>
 #include "Member.h"
 #include "MemberModel.h"
+#include "ISyncListModel.h"
 
-class MemberListModel : public QAbstractListModel
+class MemberListModel : public QAbstractListModel, ISyncListModel
 {
     Q_OBJECT
 public:

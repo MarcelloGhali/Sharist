@@ -55,9 +55,11 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
         vector<MemberPtr> maratMembers;
         maratMembers.push_back(alexP);
         maratMembers.push_back(slavaP);
+        maratMembers.push_back(maratP);
         vector<MemberPtr> slavaMembers;
         slavaMembers.push_back(alexP);
         slavaMembers.push_back(maratP);
+        slavaMembers.push_back(slavaP);
         ExpenseItemPtr gasP(new ExpenseItem(90, maratP, vector<MemberPtr>(), maratMembers));
         ExpenseItemPtr foodP(new ExpenseItem(120, slavaP, vector<MemberPtr>(), slavaMembers));
         SharedEvent oregon("oregon");
@@ -85,9 +87,11 @@ void Core_Test::sharedevent_should_return_correct_optimization1(){
         vector<MemberPtr> maratMembers;
         maratMembers.push_back(alexP);
         maratMembers.push_back(ruslanP);
+        maratMembers.push_back(maratP);
         vector<MemberPtr> ruslanMembers;
         ruslanMembers.push_back(alexP);
         ruslanMembers.push_back(maratP);
+        ruslanMembers.push_back(ruslanP);
         ExpenseItemPtr gasP(new ExpenseItem(87.07, maratP, vector<MemberPtr>(), maratMembers));
         ExpenseItemPtr foodP(new ExpenseItem(126.91, maratP, vector<MemberPtr>(), maratMembers));
         ExpenseItemPtr campingP(new ExpenseItem(25, ruslanP, vector<MemberPtr>(), ruslanMembers));
@@ -117,9 +121,11 @@ void Core_Test::sharedevent_should_return_correct_optimization2(){
         vector<MemberPtr> maratMembers;
         maratMembers.push_back(alexP);
         maratMembers.push_back(ruslanP);
+        maratMembers.push_back(maratP);
         vector<MemberPtr> ruslanMembers;
         ruslanMembers.push_back(alexP);
         ruslanMembers.push_back(maratP);
+        ruslanMembers.push_back(ruslanP);
         ExpenseItemPtr errP(new ExpenseItem(143.44, maratP, vector<MemberPtr>(), maratMembers));
         ExpenseItemPtr lodgeP(new ExpenseItem(321, ruslanP, vector<MemberPtr>(), ruslanMembers));
         SharedEvent canada("canada");
@@ -147,9 +153,11 @@ void Core_Test::sharedevent_optimize_should_be_idempotent(){
         vector<MemberPtr> maratMembers;
         maratMembers.push_back(alexP);
         maratMembers.push_back(ruslanP);
+        maratMembers.push_back(maratP);
         vector<MemberPtr> ruslanMembers;
         ruslanMembers.push_back(alexP);
         ruslanMembers.push_back(maratP);
+        ruslanMembers.push_back(ruslanP);
         ExpenseItemPtr errP(new ExpenseItem(143.44, maratP, vector<MemberPtr>(), maratMembers));
         ExpenseItemPtr lodgeP(new ExpenseItem(321, ruslanP, vector<MemberPtr>(), ruslanMembers));
         SharedEvent canada("canada");

@@ -36,7 +36,7 @@ int SharedEvent::GetGrowthRate(){
 
 void SharedEvent::AddExpenseItem(const ExpenseItemPtr &item){
 	// TODO : we currently don't support members in a group
-    int splitNumber = item->paid.size() + 1;
+    int splitNumber = item->paid.size();
 	double share = item->cost / splitNumber;
 	// TODO : add validation. Currently users needs to be added prior to adding an expense item
 //	if (areNewPeopleAdded(item)){
