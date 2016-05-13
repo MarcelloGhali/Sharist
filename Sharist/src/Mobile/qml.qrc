@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ListSharedEvent.qml</file>
+        <file>NewSharedEvent.qml</file>
+        <file>DetailsSharedEvent.qml</file>
+        <file>Base.qml</file>
+        <file>NewExpenseItem.qml</file>
+        <file>MembersSelectionView.qml</file>
+        <file>NewMember.qml</file>
+    </qresource>
+</RCC>
