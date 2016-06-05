@@ -6,20 +6,20 @@ MemberModel::MemberModel(QObject *parent){
 
 MemberModel::MemberModel(QObject *parent, MemberPtr member):
     QObject(parent),
-    rawMember(member),
-    _isSelected(false){
+    rawMember(member){
+//    _isSelected(false){
 }
 
 MemberModel::~MemberModel(){
 }
 
-bool MemberModel::selected(){
-    return this->_isSelected;
-}
+//bool MemberModel::selected(){
+//    return this->_isSelected;
+//}
 
-void MemberModel::setSelected(bool isSelected){
-    this->_isSelected = isSelected;
-}
+//void MemberModel::setSelected(bool isSelected){
+//    this->_isSelected = isSelected;
+//}
 
 QString MemberModel::name(){
     if (this->rawMember!=NULL)

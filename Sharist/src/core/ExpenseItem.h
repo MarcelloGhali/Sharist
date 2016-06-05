@@ -13,7 +13,6 @@ public:
     vector<MemberPtr> coveredMembers;
     vector<MemberPtr> paid;
     ExpenseItem();
-    //TODO: redesign to avoid copy of vectors
     ExpenseItem(double cost, const MemberPtr &owner, const vector<MemberPtr> &coveredMembers, const vector<MemberPtr> &paid);
 	~ExpenseItem();
 };

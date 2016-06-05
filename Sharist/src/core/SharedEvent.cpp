@@ -3,35 +3,20 @@
 #include <string>
 #include <sstream>
 
-int SharedEvent::size = 5;
-double SharedEvent::growthCoefficient = 2;
-
-SharedEvent::SharedEvent(string name):
-    eventName(name),
-    expenseMap(initVector(size*size)),
-    optimizedMap(initVector(size*size)),
-    balanceVector(initVector(size)),
-    lastMemberOrder(0){
-}
-
-SharedEvent::~SharedEvent(){
-    dispose();
-}
-
-int SharedEvent::GetCapacity(){
-	return this->size;
+SharedEvent::SharedEvent(const string& name):
+    membersMap(),
+    lastMemberOrder(0),
+    expenseMapV(InitSize*InitSize, 0),
+    optimizedMapV(InitSize*InitSize, 0),
+    eventName(name){
 }
 
 string SharedEvent::GetEventName(){
     return eventName;
 }
 
-void SharedEvent::SetEventName(string name){
+void SharedEvent::SetEventName(const string& name){
     this->eventName = name;
-}
-
-int SharedEvent::GetGrowthRate(){
-	return this->growthCoefficient;
 }
 
 void SharedEvent::AddExpenseItem(const ExpenseItemPtr &item){
@@ -45,9 +30,10 @@ void SharedEvent::AddExpenseItem(const ExpenseItemPtr &item){
 
 	// TODO: validation
 	int ownerIndex = membersMap[item->owner];
+    int k = expenseMapV.size()/InitSize;
     for (vector<MemberPtr>::iterator it = item->paid.begin(); it < item->paid.end(); it++){
         int paidForMemberIndex = membersMap[*it];
-        this->expenseMap[paidForMemberIndex*size + ownerIndex] += share;
+        this->expenseMapV[paidForMemberIndex*k + ownerIndex] += share;
 	}
 
     expenseItems.push_back(item);
@@ -65,92 +51,84 @@ void SharedEvent::RemoveMember(const MemberPtr &memberToRemove){
 }
 
 void SharedEvent::AddMember(const MemberPtr &newMember){
-	// it is time to grow
-	// TODO: add option to re-calculate certain expenses
-	if (lastMemberOrder == size){
-        expand();
-	}
+    int currentSize = std::sqrt(expenseMapV.size());
+    // number of members exceed number of available slots check
+    if (currentSize == members.size()){
+        // doubling current size
+        int newSize = currentSize * GrowthFactor;
+        expenseMapV.resize(newSize * newSize, 0);
+    }
+
     members.push_back(newMember);
     membersMap.insert(std::pair<MemberPtr, int>(newMember, lastMemberOrder++));
 }
 
-double* SharedEvent::Optimize(double* input){
-	expenseMap = input;
-	return Optimize();
-}
+vector<double> SharedEvent::Optimize(){
+    int k = std::sqrt(expenseMapV.size());
+    vector<double> balanceVectorV(k, 0);
 
-double* SharedEvent::Optimize(){
-    //TODO: cover with idenmotancy tests
-    //clearing balance vector
-    for(int i=0;i<size;i++){
-        balanceVector[i]=0;
-    }
-    //clearing optimized map
-    for(int i=0;i<size*size;i++){
-        optimizedMap[i]=0;
-    }
-
+    // clearing previously calculated map
+    optimizedMapV.clear();
+    optimizedMapV.resize(expenseMapV.size(), 0);
 
 	//calculating balance vector
-	for (int i = 0; i < size; i++){
-		for (int j = 0; j < size; j++){
-            balanceVector[i] += expenseMap[j*size + i] - expenseMap[i*size + j];
+    for (int i = 0; i < k; i++){
+        for (int j = 0; j < k; j++){
+            balanceVectorV[i] += expenseMapV[j*k + i] - expenseMapV[i*k + j];
 		}
 	}
 
-	double* balanceVectorCpy = initVector(size);
-	memcpy(balanceVectorCpy, balanceVector, size*sizeof(balanceVector));
 	//optimizing
-	int negativeI = -1, positiveI = -1;
+    int negativeI = -1, positiveI = -1;
 	while (true){
 		//geting the <0 number
-		for (int i = 0; i < size; i++){
-			if (balanceVectorCpy[i] < 0){
-				negativeI = i;
+        for (vector<double>::iterator it = balanceVectorV.begin(); it < balanceVectorV.end(); it++){
+            if (*it < 0){
+                negativeI = it - balanceVectorV.begin();
 				break;
 			}
 		}
 
 		//getting the >0 number
-		for (int i = 0; i < size; i++){
-			if (balanceVectorCpy[i] > 0){
-				positiveI = i;
+        for (vector<double>::iterator it = balanceVectorV.begin(); it < balanceVectorV.end(); it++){
+            if (*it > 0){
+                positiveI = it - balanceVectorV.begin();
 				break;
 			}
 		}
 
-		if (negativeI > -1 && positiveI > -1){
-			if (abs(balanceVectorCpy[positiveI]) > abs(balanceVectorCpy[negativeI])){
-                optimizedMap[negativeI*size + positiveI] = abs(balanceVectorCpy[negativeI]);
-				balanceVectorCpy[positiveI] += balanceVectorCpy[negativeI];
-				balanceVectorCpy[negativeI] = 0;
+        if (negativeI > -1 && positiveI > -1){
+            if (abs(balanceVectorV[positiveI]) > abs(balanceVectorV[negativeI])){
+                optimizedMapV[negativeI*k + positiveI] = abs(balanceVectorV[negativeI]);
+                balanceVectorV[positiveI] += balanceVectorV[negativeI];
+                balanceVectorV[negativeI] = 0;
 			}
 			else{
-                optimizedMap[negativeI*size + positiveI] = balanceVectorCpy[positiveI];
-				balanceVectorCpy[negativeI] += balanceVectorCpy[positiveI];
-				balanceVectorCpy[positiveI] = 0;
+                optimizedMapV[negativeI*k + positiveI] = balanceVectorV[positiveI];
+                balanceVectorV[negativeI] += balanceVectorV[positiveI];
+                balanceVectorV[positiveI] = 0;
 			}
 		}
 		else break;
 
-		negativeI = -1, positiveI = -1;
+        negativeI = -1, positiveI = -1;
 	}
 
-	delete[] balanceVectorCpy;
-	return optimizedMap;
+    return optimizedMapV;
 }
 
 string SharedEvent::Print(){
     string toReturn;
     std::ostringstream str;
+    int k = optimizedMapV.size()/InitSize;
     for (int i = 0; i < this->lastMemberOrder; i++){
         for (int j = 0; j < this->lastMemberOrder; j++){
-            if (optimizedMap[i*size + j] == 0) continue;
+            if (optimizedMapV[i*k + j] == 0) continue;
             str<<this->findMember(i)->Name;
             str<<" owes ";
             str<<this->findMember(j)->Name;
             str<<": ";
-            str<<optimizedMap[i*size + j];
+            str<<optimizedMapV[i*k + j];
             str<<"\n";
             //printf("%s owes %s: %f \n", this->findMember(i)->Name.c_str(), this->findMember(j)->Name.c_str(), optimizedMap[i*size + j]);
         }
@@ -158,10 +136,10 @@ string SharedEvent::Print(){
 
     double totalSpent = 0;
     double totalOwe = 0;
-    for (int i = 0; i < size; i++){
-        if (balanceVector[i] < 0) totalOwe += balanceVector[i];
-        else totalSpent += balanceVector[i];
-    }
+//    for (int i = 0; i < size; i++){
+//        if (balanceVector[i] < 0) totalOwe += balanceVector[i];
+//        else totalSpent += balanceVector[i];
+//    }
 
     // TODO: define what is total spend and total debt
     totalSpent=0;
@@ -178,33 +156,6 @@ string SharedEvent::Print(){
     return toReturn;
 }
 
-void SharedEvent::dispose(){
-    delete[] this->balanceVector;
-    delete[] this->expenseMap;
-    delete[] this->optimizedMap;
-}
-
-void SharedEvent::expand(){
-    int newSize = size * growthCoefficient;
-    double* newExpenseMap, *newOptimizedMap;
-    double* newBalanceVector;
-    //init
-    newExpenseMap = initVector(newSize*newSize);
-    newOptimizedMap = initVector(newSize*newSize);
-    newBalanceVector = initVector(newSize);
-    //copy
-    memcpy(newExpenseMap, expenseMap, size*sizeof(expenseMap));
-    memcpy(newOptimizedMap, optimizedMap, size*sizeof(optimizedMap));
-    memcpy(newBalanceVector, balanceVector, size*sizeof(balanceVector));
-    //recycle
-    dispose();
-    //swap
-    expenseMap = newExpenseMap;
-    optimizedMap = newOptimizedMap;
-    balanceVector = newBalanceVector;
-    size = newSize;
-}
-
 MemberPtr SharedEvent::findMember(int index) {
     for (map<MemberPtr, int>::iterator it = this->membersMap.begin(); it != this->membersMap.end(); it++){
         if (it->second == index){
@@ -215,16 +166,10 @@ MemberPtr SharedEvent::findMember(int index) {
     return 0;
 }
 
-double* SharedEvent::initVector(int n){
-    double* toReturn = new double[n];
-    // basic init of the map
-    for (int i = 0; i < n; i++){
-        toReturn[i] = 0;
-    }
-
-    return toReturn;
+vector<MemberPtr> SharedEvent::GetMembers(){
+    return members;
 }
 
-vector<MemberPtr>* SharedEvent::GetMembers(){
-    return &members;
+vector<ExpenseItemPtr> SharedEvent::GetExpenseItems(){
+    return expenseItems;
 }

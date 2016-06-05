@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
+import Sharist.Models 1.0
 
 Item{
     id:form
@@ -18,6 +19,7 @@ Item{
             width: parent.width
             cursorVisible: true
         }
+        Binding{target: viewmodel; property: "name"; value:eventName.text}
         Row{
             width: parent.width
             spacing: 10
@@ -25,19 +27,19 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-                    if (navigator){
-                        navigator.pop()
-                    }
+//                    if (navigator){
+//                        navigator.pop()
+//                    }
                 }
             }
             Button{
                 id: addNewSharedEvent
                 text: "Save"
                 onClicked: {
-                    eventsModel.addSharedEvent(eventName.text)
-                    if (navigator){
-                        navigator.pop()
-                    }
+                    viewmodel.Save();
+//                    if (navigator){
+//                        navigator.pop()
+//                    }
                 }
             }
         }

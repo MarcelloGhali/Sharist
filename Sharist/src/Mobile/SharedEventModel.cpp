@@ -3,43 +3,47 @@
 SharedEventModel::SharedEventModel(QObject *parent)
     :QObject(parent){}
 
-SharedEventModel::SharedEventModel(QObject* parent, SharedEvent* rawSharedEvent):
+SharedEventModel::SharedEventModel(const QString &name, QObject *parent):
     QObject(parent),
-    rawSharedEvent(rawSharedEvent),
-    //TODO: make API consistent
-    expensesListModel(this, &(rawSharedEvent->expenseItems)),
-    memberListModel(this, rawSharedEvent->GetMembers()){
+    rawSharedEventPtr(new SharedEvent(name.toStdString())){
 }
 
-void SharedEventModel::AddExpenseItem(ExpenseItemModel *model){
+SharedEventModel::SharedEventModel(QObject* parent, const SharedEventPtr &rawSharedEvent):
+    QObject(parent),
+    rawSharedEventPtr(rawSharedEvent),
+    expensesListModelPtr(ExpenseItemListModelPtr(new ExpenseItemListModel(this, rawSharedEvent))),
+    memberListModelPtr(MemberListModelPtr(new MemberListModel(this, rawSharedEvent->GetMembers()))){
+}
+
+void SharedEventModel::AddExpenseItem(ExpenseItemModel* model){
     ExpenseItemPtr item = model->getRawExpenseItem();
-    this->rawSharedEvent->AddExpenseItem(item);
-    expensesListModel.Sync();
+    this->rawSharedEventPtr->AddExpenseItem(item);
+    expensesListModelPtr->Sync();
     expenseListChanged();
     resultChanged();
 }
 
 void SharedEventModel::AddMember(QString name){
     MemberPtr memberPtr(new Member(name.toStdString()));
-    this->rawSharedEvent->AddMember(memberPtr);
-    memberListModel.Sync();
+    this->rawSharedEventPtr->AddMember(memberPtr);
+    memberListModelPtr->Sync(this->rawSharedEventPtr->GetMembers());
 }
 
 QString SharedEventModel::result(){
-    this->rawSharedEvent->Optimize();
-    QString results = QString::fromStdString(this->rawSharedEvent->Print());
+    this->rawSharedEventPtr->Optimize();
+    QString results = QString::fromStdString(this->rawSharedEventPtr->Print());
     return results;
 }
 
 QString SharedEventModel::name() const{
-    return QString::fromStdString(this->rawSharedEvent->GetEventName());
+    return QString::fromStdString(this->rawSharedEventPtr->GetEventName());
 }
 
 ExpenseItemListModel* SharedEventModel::expenseList(){
-    return &(this->expensesListModel);
+    return this->expensesListModelPtr.get();
 }
 
 MemberListModel* SharedEventModel::memberList(){
-    return &(this->memberListModel);
+    return this->memberListModelPtr.get();
 }
 

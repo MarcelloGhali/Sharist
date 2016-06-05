@@ -2,18 +2,26 @@
 
 SharedEventListModel::SharedEventListModel(QObject *parent)
     :QAbstractListModel(parent){
+
+}
+
+SharedEventListModel::SharedEventListModel(QObject *parent, const vector<SharedEventPtr> &data)
+    :QAbstractListModel(parent){
+    for(vector<SharedEventPtr>::const_iterator it = data.begin(); it<data.end(); it++){
+        SharedEventModelPtr newModelPtr(new SharedEventModel(this, *it));
+        sharedEvents.append(newModelPtr);
+    }
 }
 
 void SharedEventListModel::addSharedEvent(const QString& eventName){
     beginInsertRows(QModelIndex(),rowCount(),rowCount());
-    //todo: create new object in factory, so that they all garbage collected
-    SharedEvent *rawSharedEvent = new SharedEvent(eventName.toStdString());
-    SharedEventModel *newModel = new SharedEventModel(this, rawSharedEvent);
-    sharedEvents.append(newModel);
+    SharedEventPtr rawSharedEventPtr(new SharedEvent(eventName.toStdString()));
+    SharedEventModelPtr newModelPtr(new SharedEventModel(this, rawSharedEventPtr));
+    sharedEvents.append(newModelPtr);
     endInsertRows();
 }
 
-void SharedEventListModel::addSharedEvent(SharedEventModel* newModel){
+void SharedEventListModel::addSharedEvent(const SharedEventModelPtr newModel){
     beginInsertRows(QModelIndex(),rowCount(),rowCount());
     sharedEvents<<newModel;
     endInsertRows();
@@ -29,7 +37,7 @@ QVariant SharedEventListModel::data(const QModelIndex &index, int role) const{
         return QVariant();
     }
 
-    SharedEventModel* model = sharedEvents[index.row()];
+    SharedEventModelPtr model = sharedEvents[index.row()];
     if (role==NameRole)
         return model->name();
     return QVariant();
@@ -50,6 +58,10 @@ int SharedEventListModel::selectedIndex(){
 }
 
 SharedEventModel* SharedEventListModel::selectedSharedEvent(){
-    return this->sharedEvents[this->_selectedIndex];
+    SharedEventModelPtr m = this->sharedEvents[this->_selectedIndex];
+    return m.get();
 }
 
+SharedEventModelPtr SharedEventListModel::getModel(const int &index){
+    return sharedEvents[index];
+}

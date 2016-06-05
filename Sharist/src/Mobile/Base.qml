@@ -7,7 +7,7 @@ Item{
     width: 320
     StackView{
         id: navigator
+        objectName: "navigatorObj"
         anchors.fill: parent
-        initialItem: Qt.resolvedUrl("ListSharedEvent.qml")
     }
 }

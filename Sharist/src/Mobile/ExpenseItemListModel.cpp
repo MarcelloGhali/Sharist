@@ -5,9 +5,9 @@ ExpenseItemListModel::ExpenseItemListModel(QObject *parent):
     QAbstractListModel(parent){
 }
 
-ExpenseItemListModel::ExpenseItemListModel(QObject *parent, vector<ExpenseItemPtr>* rawExpenses):
+ExpenseItemListModel::ExpenseItemListModel(QObject *parent, const SharedEventPtr &sharedEvt):
     QAbstractListModel(parent),
-    rawExpenseItems(rawExpenses){
+    rawSharedEvent(sharedEvt){
     this->Sync();
 }
 
@@ -15,18 +15,19 @@ ExpenseItemListModel::~ExpenseItemListModel(){
 }
 
 void ExpenseItemListModel::Sync(){
-    for(vector<ExpenseItemPtr>::iterator it=this->rawExpenseItems->begin(); it!=this->rawExpenseItems->end(); it++){
+    vector<ExpenseItemPtr> ptrs = this->rawSharedEvent->GetExpenseItems();
+    for(vector<ExpenseItemPtr>::iterator it=ptrs.begin(); it!=ptrs.end(); it++){
         ExpenseItemPtr rawExpenseItem = *it;
         bool isFound = false;
-        for(QList<ExpenseItemModel*>::iterator itM=this->expenseModels.begin(); itM!=this->expenseModels.end() && !isFound; itM++){
-            ExpenseItemModel* expenseItemModel = *itM;
+        for(QList<ExpenseItemModelPtr>::iterator itM=this->expenseModels.begin(); itM!=this->expenseModels.end() && !isFound; itM++){
+            ExpenseItemModelPtr expenseItemModel = *itM;
             if (rawExpenseItem==expenseItemModel->getRawExpenseItem()){
                 isFound = true;
             }
         }
 
         if (!isFound){
-            ExpenseItemModel* newModel = new ExpenseItemModel(this, rawExpenseItem);
+            ExpenseItemModelPtr newModel(new ExpenseItemModel(this, rawExpenseItem));
             this->beginInsertRows(QModelIndex(),rowCount(),rowCount());
             this->expenseModels.append(newModel);
             this->endInsertRows();
@@ -35,8 +36,8 @@ void ExpenseItemListModel::Sync(){
 }
 
 void ExpenseItemListModel::createTempExpense(){
-    //TODO: memory management, move to viewmodel
-    this->currentExpense = new ExpenseItemModel(this);
+    ExpenseItemModelPtr newPtr(new ExpenseItemModel(this));
+    this->currentExpensePtr = newPtr;
 }
 
 int ExpenseItemListModel::rowCount(const QModelIndex &parent) const{
@@ -45,20 +46,19 @@ int ExpenseItemListModel::rowCount(const QModelIndex &parent) const{
 }
 
 QVariant ExpenseItemListModel::data(const QModelIndex &index, int role) const{
-    if (index.row()<0 || index.row()>=this->rawExpenseItems->size()){
+    if (index.row()<0 || index.row()>=this->expenseModels.size()){
         return QVariant(QString::null);
     }
 
-    if (role==Qt::DisplayRole && this->rawExpenseItems->size()>0){
-        ExpenseItemPtr item = this->rawExpenseItems->at(index.row());
-        MemberPtr memberPtr = item->owner;
-        QString outStr = QString::fromStdString(memberPtr->Name) + ": " + QString::number(item->cost);
-        return QVariant(outStr);
+    if (role==Qt::DisplayRole && this->expenseModels.size()>0){
+        ExpenseItemModelPtr item = this->expenseModels.at(index.row());
+        MemberModel* memberModel = item->owner();
+        return memberModel->name();
     }
 
     return QVariant();
 }
 
 ExpenseItemModel* ExpenseItemListModel::currentExpenseItem(){
-    return this->currentExpense;
+    return this->currentExpensePtr.get();
 }

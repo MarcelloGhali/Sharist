@@ -3,8 +3,8 @@
 using namespace::std;
 
 ExpenseItem::ExpenseItem():
-    paid(NULL),
-    owner(NULL),
+    paid(),
+    owner(),
     cost(0){
 }
 

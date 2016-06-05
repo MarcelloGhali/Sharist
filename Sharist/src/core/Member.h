@@ -7,7 +7,7 @@ using namespace::std;
 
 class Member{
 public:
-    Member(string name);
+    Member(const string& name);
     ~Member();
 	string Name;
 };

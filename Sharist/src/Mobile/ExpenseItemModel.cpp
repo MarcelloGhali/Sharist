@@ -7,37 +7,39 @@ ExpenseItemModel::ExpenseItemModel(QObject *parent) :
     this->rawExpenseItem = newItemP;
 }
 
-ExpenseItemModel::ExpenseItemModel(QObject* parent, const ExpenseItemPtr &expense):
+ExpenseItemModel::ExpenseItemModel(QObject* parent, ExpenseItemPtr expense):
     QObject(parent),
-    rawExpenseItem(expense){
+    rawExpenseItem(expense),
+    ownerPtr(new MemberModel(this, expense->owner)),
+    paidPtr(new MemberListModel(this, expense->paid)){
 }
 
 MemberListModel* ExpenseItemModel::paid(){
-    MemberListModel* listModels = new MemberListModel(this, &(this->rawExpenseItem->paid));
-    return listModels;
+    return paidPtr.get();
 }
 
-void ExpenseItemModel::setPaid(MemberListModel* members){
-    //clear all there was before
-    this->rawExpenseItem->paid.clear();
-    QList<MemberModel*>* models = members->getSelected();
-    for(QList<MemberModel*>::iterator it=models->begin(); it!=models->end(); it++){
-        MemberModel* model = *it;
-        if(model->selected()){
-            this->rawExpenseItem->paid.push_back(model->getRawMember());
-        }
-    }
+//void ExpenseItemModel::setPaid(MemberListModel* members){
+//    //clear all there was before
+//    this->rawExpenseItem->paid.clear();
+//    QList<MemberModelPtr> models = members->getSelected();
+//    for(QList<MemberModelPtr>::iterator it=models.begin(); it!=models.end(); it++){
+//        MemberModelPtr model = *it;
+//        if(model->selected()){
+//            this->rawExpenseItem->paid.push_back(model->getRawMember());
+//        }
+//    }
 
-    paidChanged();
-}
+//    paidPtr.reset(new MemberListModel(this, rawExpenseItem->paid));
+//    paidChanged();
+//}
 
 MemberModel* ExpenseItemModel::owner(){
-    MemberModel* model = new MemberModel(this, this->rawExpenseItem->owner);
-    return model;
+    return ownerPtr.get();
 }
 
 void ExpenseItemModel::setOwner(MemberModel* member){
     this->rawExpenseItem->owner = member->getRawMember();
+    ownerPtr.reset(new MemberModel(this, rawExpenseItem->owner));
     ownerChanged();
 }
 

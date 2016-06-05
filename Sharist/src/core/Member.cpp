@@ -1,6 +1,6 @@
 #include "Member.h"
 
-Member::Member(string name):
+Member::Member(const string& name):
     Name(name){
 }
 

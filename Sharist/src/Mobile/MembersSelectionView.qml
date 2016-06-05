@@ -6,7 +6,9 @@ Item {
     width: 320
     height: 400
     property bool isMultiselect
+    property var members
     id:newExpenseItem
+
     Component {
        id: memberDelegate
        Item{
@@ -17,7 +19,7 @@ Item {
                width: parent.width
                height: parent.height
                radius: 5
-               color: { Selected ? "lightsteelblue" : "white" }
+               color: { members[index] ? "lightsteelblue" : "white" }
                Text {
                    text: Name
                }
@@ -26,7 +28,15 @@ Item {
                anchors.fill: parent
                onClicked: {
                    if (!isMultiselect){
-                      eventsModel.selectedSharedEvent.memberList.deselect(index);
+                       if (members[index]){
+                           members[index] = false;
+                           eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.addPaidMember()
+                       }
+                       else{
+                           members[index] = true;
+                       }
+
+                      //eventsModel.selectedSharedEvent.memberList.deselect(index);
                    }
 
                    Selected=!Selected;
@@ -61,10 +71,10 @@ Item {
                 text: qsTr("Back")
                 onClicked: {
                     if (navigator){
-                        if (isMultiselect)
-                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid = eventsModel.selectedSharedEvent.memberList;
-                        else
-                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner = eventsModel.selectedSharedEvent.memberList.firstSelected;
+//                        if (isMultiselect)
+//                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid = eventsModel.selectedSharedEvent.memberList;
+//                        else
+//                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner = eventsModel.selectedSharedEvent.memberList.firstSelected;
                         navigator.pop()
                     }
                 }

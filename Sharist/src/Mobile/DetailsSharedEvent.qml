@@ -11,13 +11,13 @@ Item{
         anchors.fill: parent
         Text{
             width: parent.width
-            text: eventsModel.selectedSharedEvent.name
+            text: viewmodel.eventModel.name
             horizontalAlignment: Text.AlignHCenter
             height: 40
         }
         ListView{
             id: expenses
-            model: eventsModel.selectedSharedEvent.expenseList
+            model: viewmodel.eventModel.expenseList//eventsModel.selectedSharedEvent.expenseList
             delegate: Text {
                 text: model.display
                 height: 40
@@ -30,7 +30,7 @@ Item{
         }
         Text{
             width: parent.width
-            text: eventsModel.selectedSharedEvent.result
+            text: viewmodel.eventModel.result
             height: 80
         }
         Row{
@@ -49,18 +49,18 @@ Item{
                 id: addExpenseBtn
                 text: "Add expense"
                 onClicked: {
-                    if (navigator)
-                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
-                        navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
+//                    if (navigator)
+//                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
+//                        navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
                 }
             }
             Button{
                 id: addMemberBtn
                 text: "Add member"
                 onClicked: {
-                    if (navigator)
-                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
-                        navigator.push({item:Qt.resolvedUrl("NewMember.qml")})
+//                    if (navigator)
+//                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
+//                        navigator.push({item:Qt.resolvedUrl("NewMember.qml")})
                 }
             }
         }

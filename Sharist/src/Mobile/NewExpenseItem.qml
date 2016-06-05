@@ -47,7 +47,13 @@ Item{
                     }
                 }
                 Text{
-                    text: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner.name
+                    text: {
+                        if (eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner){
+                            return eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner.name
+                        }
+
+                        return "";
+                    }
                 }
             }
         }

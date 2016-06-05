@@ -33,18 +33,19 @@ void Core_Test::sharedevent_should_expand_if_new_members_added(){
     oregon.AddMember(alexP);
     oregon.AddMember(slavaP);
     oregon.AddExpenseItem(gasP);
-    oregon.Optimize();
-    int countResults = oregon.GetCapacity();
+    vector<double> r1(oregon.Optimize());
+    int countResults = r1.size();
     //adding new users
-    int k=2;
-    for (int i = 0; i < countResults*k; i++){
+    int currentSize = std::sqrt(countResults);
+    int newSize = std::sqrt(countResults) + 1;
+    for (int i = 0; i < 5; i++){
         MemberPtr tmpMember(new Member("test"));
         oregon.AddMember(tmpMember);
     }
     //check
-    oregon.Optimize();
-    int countExpandedResults = oregon.GetCapacity();
-    QVERIFY(countResults*k*oregon.GetGrowthRate()==countExpandedResults);
+    vector<double> r2(oregon.Optimize());
+    int newCountResults = r2.size();
+    QVERIFY(countResults==newSize*newSize);
 }
 
 void Core_Test::sharedevent_should_return_correct_optimization(){
@@ -72,8 +73,8 @@ void Core_Test::sharedevent_should_return_correct_optimization(){
         double alexOweSlava = 50;
         double alexOweMarat = 20;
         //test
-        double* results = oregon.Optimize();
-        int size = oregon.GetCapacity();
+        vector<double> results(oregon.Optimize());
+        int size = results.size()/5;
         //adding new users
         QVERIFY(results[1*size + 0] == alexOweMarat);
         QVERIFY(results[1*size + 2] == alexOweSlava);
@@ -106,8 +107,8 @@ void Core_Test::sharedevent_should_return_correct_optimization1(){
         double alexOweMarat = 79.660000;
         double ruslanOweMarat = 54.660000;
         //test
-        double* results = oregon.Optimize();
-        int size = oregon.GetCapacity();
+        vector<double> results(oregon.Optimize());
+        int size = results.size()/5;
         //adding new users
         QVERIFY(results[1*size + 0] == alexOweMarat);
         QVERIFY(results[2*size + 0] == ruslanOweMarat);
@@ -138,8 +139,8 @@ void Core_Test::sharedevent_should_return_correct_optimization2(){
         double maratOweRuslan = 11.373333333333335;
         double alexOweRuslan = 154.81333333333333;
         //test
-        double* results = canada.Optimize();
-        int size = canada.GetCapacity();
+        vector<double> results(canada.Optimize());
+        int size = results.size()/5;
         //adding new users
         QVERIFY(results[0*size + 2] == maratOweRuslan);
         QVERIFY(results[1*size + 2] == alexOweRuslan);
@@ -170,10 +171,10 @@ void Core_Test::sharedevent_optimize_should_be_idempotent(){
         double maratOweRuslan = 11.373333333333335;
         double alexOweRuslan = 154.81333333333333;
         //test
-        double* results = canada.Optimize();
         canada.Optimize();
         canada.Optimize();
-        int size = canada.GetCapacity();
+        vector<double> results(canada.Optimize());
+        int size = results.size()/5;
         //adding new users
         QVERIFY(results[0*size + 2] == maratOweRuslan);
         QVERIFY(results[1*size + 2] == alexOweRuslan);

@@ -1,3 +1,6 @@
+#ifndef SharedEvent_H
+#define SharedEvent_H
+
 #include "ExpenseItem.h"
 #include <vector>
 #include <map>
@@ -7,31 +10,25 @@ private:
     map<MemberPtr, int> membersMap;
     vector<MemberPtr> members;
 	int lastMemberOrder;
-    static int size;
-    static double growthCoefficient;
-    //TODO: use vector instead
-    double* expenseMap, *optimizedMap;
-    double* balanceVector;
+    const int InitSize = 5;
+    const int GrowthFactor = 2;
+    vector<double> expenseMapV, optimizedMapV;
     string eventName;
-    double* initVector(int n);
-    MemberPtr findMember(int index);
-    void expand();
-    void dispose();
-public:
-    SharedEvent(string name);
     vector<ExpenseItemPtr> expenseItems;
+    MemberPtr findMember(int index);
+public:
+    SharedEvent(const string& name);
     void RemoveExpenseItem(const ExpenseItemPtr &item);
     void AddExpenseItem(const ExpenseItemPtr &item);
     void AddMember(const MemberPtr &newMember);
     void RemoveMember(const MemberPtr &memberToRemove);
-    vector<MemberPtr>* GetMembers();
-	int GetCapacity();
-	int GetGrowthRate();
+    vector<MemberPtr> GetMembers();
+    vector<ExpenseItemPtr> GetExpenseItems();
     string GetEventName();
-    void SetEventName(string name);
-    double* Optimize();
-    double* Optimize(double* input);
+    void SetEventName(const string& name);
+    vector<double> Optimize();
     string Print();
-	~SharedEvent();
 };
 
+typedef shared_ptr<SharedEvent> SharedEventPtr;
+#endif

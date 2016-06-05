@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
+import Sharist.Models 1.0
 
 Item{
     id: mainWindow
@@ -15,15 +16,7 @@ Item{
            MouseArea{
                anchors.fill: parent
                onClicked: {
-                   list.currentIndex = index
-                   if (navigator){
-                       navigator.push({
-                            item: Qt.resolvedUrl("DetailsSharedEvent.qml"),
-                            properties:{
-                                    eventModel: eventsModel.selectedIndex = index
-                            }
-                        })
-                   }
+                   viewmodel.NavigateToDetails(index);
                }
            }
        }
@@ -33,8 +26,8 @@ Item{
         anchors.fill: parent
         ListView{
             id: list
-            //clip: true
-            model: eventsModel
+            clip: true
+            model: viewmodel.eventsList
             width:parent.width
             height:4*40
             spacing: 10
@@ -48,9 +41,7 @@ Item{
             width: parent.width
             text: "Add new event"
             onClicked: {
-                if (navigator){
-                    navigator.push({item:Qt.resolvedUrl("NewSharedEvent.qml")})
-                }
+                viewmodel.NavigateToNew();
             }
         }
     }

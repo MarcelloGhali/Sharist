@@ -3,13 +3,20 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    NavigatorMap.cpp \
     SharedEventListModel.cpp \
     SharedEventModel.cpp \
     ExpenseItemListModel.cpp \
-    MemberModel.cpp \
     ExpenseItemModel.cpp \
-    MemberListModel.cpp
+    MemberModel.cpp \
+    MemberListModel.cpp \
+    MemberSelectionViewModel.cpp \
+    AppBaseFacade.cpp \
+    SharedEventListView.cpp \
+    ViewModel.cpp \
+    GuiManager.cpp \
+    SharedEventDetailsView.cpp \
+    ParameterizedViewModel.cpp \
+    SharedEventNewView.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,14 +34,21 @@ INCLUDEPATH += $$PWD/../core
 DEPENDPATH += $$PWD/../core
 
 HEADERS += \
-    NavigatorMap.h \
     SharedEventListModel.h \
     SharedEventModel.h \
     ExpenseItemListModel.h \
     MemberModel.h \
     ExpenseItemModel.h \
+    ISyncListModel.h \
     MemberListModel.h \
-    ISyncListModel.h
+    MemberSelectionViewModel.h \
+    AppBaseFacade.h \
+    SharedEventListView.h \
+    ViewModel.h \
+    GuiManager.h \
+    SharedEventDetailsView.h \
+    ParameterizedViewModel.h \
+    SharedEventNewView.h
 
 CONFIG += c++11
 
