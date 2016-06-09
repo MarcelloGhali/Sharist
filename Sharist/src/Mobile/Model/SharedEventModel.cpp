@@ -15,12 +15,9 @@ SharedEventModel::SharedEventModel(QObject* parent, const SharedEventPtr &rawSha
     memberListModelPtr(MemberListModelPtr(new MemberListModel(this, rawSharedEvent->GetMembers()))){
 }
 
-void SharedEventModel::AddExpenseItem(ExpenseItemModel* model){
-    ExpenseItemPtr item = model->getRawExpenseItem();
-    this->rawSharedEventPtr->AddExpenseItem(item);
-    expensesListModelPtr->Sync();
-    expenseListChanged();
-    resultChanged();
+void SharedEventModel::AddExpenseItem(const ExpenseItemModelPtr &expense){
+   rawSharedEventPtr.get()->AddExpenseItem(expense.get()->getRawExpenseItem());
+   expensesListModelPtr.get()->Sync();
 }
 
 void SharedEventModel::AddMember(QString name){

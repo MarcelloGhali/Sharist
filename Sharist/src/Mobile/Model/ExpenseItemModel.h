@@ -13,12 +13,11 @@ class ExpenseItemModel : public QObject
 public:
     ExpenseItemModel(QObject *parent = 0);
     ExpenseItemModel(QObject *parent, ExpenseItemPtr expense);
+    ExpenseItemModel(const double &total, MemberModelPtr owner, vector<MemberModelPtr> paid, QObject *parent = 0);
     Q_PROPERTY(double cost READ cost WRITE setCost NOTIFY costChanged)
     // qml doesn't support shared_ptr, exposing raw pointers
     Q_PROPERTY(MemberModel* owner READ owner WRITE setOwner NOTIFY ownerChanged)
     Q_PROPERTY(MemberListModel* paid READ paid NOTIFY paidChanged)
-    //Q_INVOKABLE void addPaidMember(MemberModel* member);
-    //Q_INVOKABLE void removePaidMember(MemberModel* member);
     double cost();
     MemberModel* owner();
     MemberListModel* paid();

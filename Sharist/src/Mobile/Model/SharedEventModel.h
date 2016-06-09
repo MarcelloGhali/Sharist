@@ -15,8 +15,8 @@ public:
     // qml doesn't support shared_ptr, exposing raw pointers
     Q_PROPERTY(ExpenseItemListModel* expenseList READ expenseList NOTIFY expenseListChanged)
     Q_PROPERTY(MemberListModel* memberList READ memberList NOTIFY memberListChanged)
-    Q_INVOKABLE void AddExpenseItem(ExpenseItemModel* model);
-    Q_INVOKABLE void AddMember(QString name);
+    void AddExpenseItem(const ExpenseItemModelPtr &expense);
+    void AddMember(QString name);
     SharedEventModel(QObject* parent = 0);
     SharedEventModel(const QString &name, QObject* parent = 0);
     SharedEventModel(QObject* parent, const SharedEventPtr &rawSharedEvent);

@@ -7,6 +7,7 @@ Item{
     id:form
     width: 320
     height: 400
+    property SharedEventNewView viewmodel: viewmodelSharedEventNewView
     Column{
         anchors.fill: parent
         Label{
@@ -36,7 +37,7 @@ Item{
                 id: addNewSharedEvent
                 text: "Save"
                 onClicked: {
-                    viewmodel.Save();
+                    viewmodel.Save()
 //                    if (navigator){
 //                        navigator.pop()
 //                    }

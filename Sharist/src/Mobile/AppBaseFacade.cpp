@@ -45,3 +45,7 @@ AppBaseFacade* AppBaseFacade::GetInstance(){
 void AppBaseFacade::AddSharedEvent(const SharedEventModelPtr &model){
     _sharedEventModelList.get()->addSharedEvent(model);
 }
+
+void AppBaseFacade::AddMember(const MemberModelPtr &model){
+
+}

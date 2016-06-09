@@ -6,6 +6,7 @@ import Sharist.Models 1.0
 Item{
     width: 320
     height: 400
+    property SharedEventDetailsView viewmodel : viewmodelDetailsEventView
     Column{
         spacing: 10
         anchors.fill: parent
@@ -17,7 +18,7 @@ Item{
         }
         ListView{
             id: expenses
-            model: viewmodel.eventModel.expenseList//eventsModel.selectedSharedEvent.expenseList
+            model: viewmodel.eventModel.expenseList
             delegate: Text {
                 text: model.display
                 height: 40
@@ -40,15 +41,16 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-                    if (navigator){
-                        navigator.pop()
-                    }
+//                    if (navigator){
+//                        navigator.pop()
+//                    }
                 }
             }
             Button{
                 id: addExpenseBtn
                 text: "Add expense"
                 onClicked: {
+                    viewmodel.AddExpense();
 //                    if (navigator)
 //                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
 //                        navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
@@ -58,6 +60,7 @@ Item{
                 id: addMemberBtn
                 text: "Add member"
                 onClicked: {
+                    viewmodel.AddMember();
 //                    if (navigator)
 //                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
 //                        navigator.push({item:Qt.resolvedUrl("NewMember.qml")})

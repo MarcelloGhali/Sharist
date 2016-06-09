@@ -20,23 +20,15 @@ public:
     MemberListModel(QObject *parent = 0);
     MemberListModel(QObject *parent, const vector<MemberPtr> &members);
     ~MemberListModel();
-//    Q_INVOKABLE void deselect();
-    // qml doesn't support shared_ptr, exposing raw pointers
-    //Q_PROPERTY(MemberModel* firstSelected READ firstSelected NOTIFY firstSelectedChanged)
-    //Q_INVOKABLE MemberModel* getMemberByIndex(const QModelIndex &index);
     void Sync(const vector<MemberPtr> &members);
-//    QList<MemberModelPtr> getSelected();
-//    MemberModel* firstSelected();
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-//    bool setData(const QModelIndex &index, const QVariant &value, int role);
+    vector<MemberModelPtr> getMembers();
 protected:
     QHash<int,QByteArray> roleNames() const;
 private:
     QList<MemberModelPtr> memberModels;
     vector<MemberPtr> rawMembers;
-signals:
-    //void firstSelectedChanged();
 public slots:
 };
 

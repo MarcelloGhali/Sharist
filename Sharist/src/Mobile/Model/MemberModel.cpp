@@ -4,6 +4,11 @@ MemberModel::MemberModel(QObject *parent){
     Q_UNUSED(parent);
 }
 
+MemberModel::MemberModel(const QString &name, QObject *parent):
+    rawMember(new Member(name.toStdString())){
+
+}
+
 MemberModel::MemberModel(QObject *parent, MemberPtr member):
     QObject(parent),
     rawMember(member){

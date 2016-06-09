@@ -1,8 +1,8 @@
 #ifndef SHAREDEVENTLISTVIEW_H
 #define SHAREDEVENTLISTVIEW_H
 
-#include "SharedEventListModel.h"
-#include "ViewModel.h"
+#include "Model/SharedEventListModel.h"
+#include "ViewModel/ViewModel.h"
 #include <QUrl>
 #include <QString>
 #include <QQuickView>

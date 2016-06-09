@@ -3,20 +3,22 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    SharedEventListModel.cpp \
-    SharedEventModel.cpp \
-    ExpenseItemListModel.cpp \
-    ExpenseItemModel.cpp \
-    MemberModel.cpp \
-    MemberListModel.cpp \
-    MemberSelectionViewModel.cpp \
+    Model/SharedEventListModel.cpp \
+    Model/SharedEventModel.cpp \
+    Model/ExpenseItemListModel.cpp \
+    Model/ExpenseItemModel.cpp \
+    Model/MemberModel.cpp \
+    Model/MemberListModel.cpp \
     AppBaseFacade.cpp \
-    SharedEventListView.cpp \
-    ViewModel.cpp \
+    ViewModel/SharedEventListView.cpp \
+    ViewModel/ViewModel.cpp \
     GuiManager.cpp \
-    SharedEventDetailsView.cpp \
-    ParameterizedViewModel.cpp \
-    SharedEventNewView.cpp
+    ViewModel/SharedEventDetailsView.cpp \
+    ViewModel/ParameterizedViewModel.cpp \
+    ViewModel/SharedEventNewView.cpp \
+    ViewModel/MemberNewView.cpp \
+    ViewModel/ExpenseNewView.cpp \
+    Model/SelectableListViewModel.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,21 +36,23 @@ INCLUDEPATH += $$PWD/../core
 DEPENDPATH += $$PWD/../core
 
 HEADERS += \
-    SharedEventListModel.h \
-    SharedEventModel.h \
-    ExpenseItemListModel.h \
-    MemberModel.h \
-    ExpenseItemModel.h \
+    Model/SharedEventListModel.h \
+    Model/SharedEventModel.h \
+    Model/ExpenseItemListModel.h \
+    Model/MemberModel.h \
+    Model/ExpenseItemModel.h \
     ISyncListModel.h \
-    MemberListModel.h \
-    MemberSelectionViewModel.h \
+    Model/MemberListModel.h \
     AppBaseFacade.h \
-    SharedEventListView.h \
-    ViewModel.h \
+    ViewModel/SharedEventListView.h \
+    ViewModel/ViewModel.h \
     GuiManager.h \
-    SharedEventDetailsView.h \
-    ParameterizedViewModel.h \
-    SharedEventNewView.h
+    ViewModel/SharedEventDetailsView.h \
+    ViewModel/ParameterizedViewModel.h \
+    ViewModel/SharedEventNewView.h \
+    ViewModel/MemberNewView.h \
+    ViewModel/ExpenseNewView.h \
+    Model/SelectableListViewModel.h
 
 CONFIG += c++11
 

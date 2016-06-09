@@ -7,6 +7,7 @@ Item{
     id: mainWindow
     width: 320
     height: 400
+    property SharedEventListView viewmodel : viewmodelEventsListView
     Component {
        id: eventDelegate
        Item{

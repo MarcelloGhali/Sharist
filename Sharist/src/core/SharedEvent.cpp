@@ -21,6 +21,7 @@ void SharedEvent::SetEventName(const string& name){
 
 void SharedEvent::AddExpenseItem(const ExpenseItemPtr &item){
 	// TODO : we currently don't support members in a group
+    // TODO: bug size + 1
     int splitNumber = item->paid.size();
 	double share = item->cost / splitNumber;
 	// TODO : add validation. Currently users needs to be added prior to adding an expense item

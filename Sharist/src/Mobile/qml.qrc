@@ -5,7 +5,7 @@
         <file>DetailsSharedEvent.qml</file>
         <file>Base.qml</file>
         <file>NewExpenseItem.qml</file>
-        <file>MembersSelectionView.qml</file>
+        <file>SelectableListView.qml</file>
         <file>NewMember.qml</file>
     </qresource>
 </RCC>

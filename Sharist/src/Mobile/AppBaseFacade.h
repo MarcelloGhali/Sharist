@@ -2,11 +2,12 @@
 #define APPBASEFACADE_H
 
 #include "SharedEvent.h"
-#include "SharedEventListModel.h"
+#include "Model/SharedEventListModel.h"
 
 class AppBaseFacade
 {
 public:
+    void AddMember(const MemberModelPtr &model);
     void AddSharedEvent(const SharedEventModelPtr &model);
     SharedEventListModelPtr GetSharedEventList();
     static AppBaseFacade* GetInstance();

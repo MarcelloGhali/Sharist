@@ -14,24 +14,23 @@ ExpenseItemModel::ExpenseItemModel(QObject* parent, ExpenseItemPtr expense):
     paidPtr(new MemberListModel(this, expense->paid)){
 }
 
+ExpenseItemModel::ExpenseItemModel(const double &total, MemberModelPtr owner, vector<MemberModelPtr> paid, QObject *parent):
+    QObject(parent){
+    vector<MemberPtr> paidVector;
+    vector<MemberPtr> covered;
+    for(vector<MemberModelPtr>::iterator it = paid.begin(); it<paid.end(); it++){
+        MemberPtr modelPtr = it->get()->getRawMember();
+        paidVector.push_back(modelPtr);
+    }
+
+    ExpenseItem* expenseItem = new ExpenseItem(total, owner->getRawMember(), covered, paidVector);
+    ExpenseItemPtr ptr(expenseItem);
+    this->rawExpenseItem = ptr;
+}
+
 MemberListModel* ExpenseItemModel::paid(){
     return paidPtr.get();
 }
-
-//void ExpenseItemModel::setPaid(MemberListModel* members){
-//    //clear all there was before
-//    this->rawExpenseItem->paid.clear();
-//    QList<MemberModelPtr> models = members->getSelected();
-//    for(QList<MemberModelPtr>::iterator it=models.begin(); it!=models.end(); it++){
-//        MemberModelPtr model = *it;
-//        if(model->selected()){
-//            this->rawExpenseItem->paid.push_back(model->getRawMember());
-//        }
-//    }
-
-//    paidPtr.reset(new MemberListModel(this, rawExpenseItem->paid));
-//    paidChanged();
-//}
 
 MemberModel* ExpenseItemModel::owner(){
     return ownerPtr.get();

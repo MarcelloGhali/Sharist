@@ -5,7 +5,7 @@
 #include <QHash>
 #include <string>
 #include <QQuickView>
-#include "ViewModel.h"
+#include "ViewModel/ViewModel.h"
 
 using namespace std;
 

@@ -6,6 +6,7 @@ Item{
     id:newExpenseItem
     width: 320
     height: 400
+    property ExpenseNewView viewmodel: viewmodelExpenseNewView
     Column {
         id: column1
         spacing: 10
@@ -22,9 +23,9 @@ Item{
                 text: qsTr("Amount:")
             }
             TextField {
-                id: textField1
-                text: eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost
+                id: totalTxt
             }
+            Binding{target: viewmodel; property: "total"; value:totalTxt.text}
         }
         Row {
             id: row2
@@ -37,24 +38,9 @@ Item{
                 height: 40
                 text: qsTr("Owner:")
             }
-            Column{
-                Button{
-                    text: "*"
-                    onClicked:{
-                        if (navigator){
-                            navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:false}})
-                        }
-                    }
-                }
-                Text{
-                    text: {
-                        if (eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner){
-                            return eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.owner.name
-                        }
-
-                        return "";
-                    }
-                }
+            SelectableListView{
+                isMultiselect: false
+                context: viewmodel.ownerModel
             }
         }
         Row {
@@ -68,24 +54,9 @@ Item{
                 height: 40
                 text: qsTr("Paid:")
             }
-            Column{
-                Button{
-                    text: "*"
-                    onClicked:{
-                        if (navigator){
-                            navigator.push({item:Qt.resolvedUrl("MembersSelectionView.qml"), properties:{isMultiselect:"true"}})
-                        }
-                    }
-                }
-                ListView{
-                    id: paidList
-                    height: 40
-                    width: 200
-                    model:eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.paid
-                    delegate: Text{
-                        text: Name
-                    }
-                }
+            SelectableListView{
+                isMultiselect: true
+                context: viewmodel.paidModel
             }
         }
         Row {
@@ -97,25 +68,16 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-                    if (navigator){
-                        navigator.pop()
-                    }
+//                    if (navigator){
+//                        navigator.pop()
+//                    }
                 }
             }
             Button{
                 id: saveBtn
                 text: "Save"
                 onClicked: {
-                    if (navigator){
-                        //check cost value
-                        var costVal = textField1.text;
-                        if (costVal!="" && costVal>0){
-                            eventsModel.selectedSharedEvent.expenseList.currentExpenseItem.cost = costVal;
-                            eventsModel.selectedSharedEvent.AddExpenseItem(eventsModel.selectedSharedEvent.expenseList.currentExpenseItem);
-                            eventsModel.selectedSharedEvent.memberList.deselect();
-                            navigator.pop()
-                        }
-                    }
+                    viewmodel.Save()
                 }
             }
         }
