@@ -57,7 +57,7 @@ HEADERS += \
 CONFIG += c++11
 
 mac {
-    QMAKE_MAC_SDK = macosx10.11
+    QMAKE_MAC_SDK = macosx10.12
 }
 
 ios {

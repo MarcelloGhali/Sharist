@@ -30,7 +30,7 @@ INCLUDEPATH += $$PWD/../../src/core
 DEPENDPATH += $$PWD/../../src/core
 
 mac {
-    QMAKE_MAC_SDK = macosx10.11
+    QMAKE_MAC_SDK = macosx10.12
 }
 
 ios {

@@ -5,8 +5,8 @@ import Sharist.Models 1.0
 
 Item{
     id: mainWindow
-    width: 320
-    height: 400
+//    width: 320
+//    height: 400
     property SharedEventListView viewmodel : viewmodelEventsListView
     Component {
        id: eventDelegate

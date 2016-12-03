@@ -5,10 +5,9 @@ ExpenseNewView::ExpenseNewView(QObject *parent):
     ParameterizedViewModel(QUrl("qrc:/NewExpenseItem.qml"), parent){
 }
 
-void ExpenseNewView::Show(QObject *model){
-    SharedEventModel* ptr = qobject_cast<SharedEventModel*>(model);
-    _sharedEvent = ptr;
-    MemberListModel *memberListModel= ptr->memberList();
+void ExpenseNewView::Show(const shared_ptr<QObject> &model){
+    _sharedEvent = dynamic_pointer_cast<SharedEventModel>(model);
+    MemberListModel *memberListModel= _sharedEvent->memberList();
     SelectableListViewModelPtr newPtr(new SelectableListViewModel(memberListModel->getMembers(),0));
     SelectableListViewModelPtr newPtr1(new SelectableListViewModel(memberListModel->getMembers(),0));
     _ownerModel = newPtr;
@@ -37,5 +36,5 @@ void ExpenseNewView::Save(){
     vector<MemberModelPtr> paid = _paidModel->getSelected();
     ExpenseItemModelPtr ptr(new ExpenseItemModel(_total, owner, paid));
     _sharedEvent->AddExpenseItem(ptr);
-    emit Navigate("DetailsEventView", _sharedEvent);
+    emit Navigate("DetailsEventView", _sharedEvent, true);
 }

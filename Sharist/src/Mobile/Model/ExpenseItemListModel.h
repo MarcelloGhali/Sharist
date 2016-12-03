@@ -24,7 +24,6 @@ public:
 private:
     SharedEventPtr rawSharedEvent;
     QList<ExpenseItemModelPtr> expenseModels;
-    //TODO: move to view model
     ExpenseItemModelPtr currentExpensePtr;
 signals:
     void currentExpenseItemChanged();

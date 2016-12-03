@@ -15,9 +15,9 @@ QString MemberNewView::getName(){
 
 void MemberNewView::Save(){
     _eventPtr->AddMember(_name);
-    emit Navigate("DetailsEventView",_eventPtr);
+    emit Navigate("DetailsEventView",_eventPtr, true);
 }
 
-void MemberNewView::Show(QObject *model){
-    _eventPtr = qobject_cast<SharedEventModel*>(model);
+void MemberNewView::Show(const shared_ptr<QObject> &model){
+    _eventPtr = dynamic_pointer_cast<SharedEventModel>(model);
 }

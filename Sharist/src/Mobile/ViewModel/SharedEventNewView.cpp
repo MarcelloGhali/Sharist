@@ -16,6 +16,6 @@ QString SharedEventNewView::getName(){
 void SharedEventNewView::Save(){
     SharedEventModelPtr ptr(new SharedEventModel(_name));
     AppBaseFacade::GetInstance()->AddSharedEvent(ptr);
-    emit Navigate("EventsListView");
+    emit Navigate("Back");
 }
 

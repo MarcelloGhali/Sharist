@@ -5,8 +5,8 @@ import Sharist.Models 1.0
 
 Item{
     id:form
-    width: 320
-    height: 400
+//    width: 320
+//    height: 400
     property MemberNewView viewmodel: viewmodelMemberNewView
     Column{
         anchors.fill: parent
@@ -28,9 +28,7 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-//                    if (navigator){
-//                        navigator.pop()
-//                    }
+                    viewmodel.NavigateBack();
                 }
             }
             Button{
@@ -38,10 +36,6 @@ Item{
                 text: "Save"
                 onClicked: {
                     viewmodel.Save();
-                    //eventsModel.selectedSharedEvent.AddMember(memberName.text)
-//                    if (navigator){
-//                        navigator.pop()
-//                    }
                 }
             }
         }

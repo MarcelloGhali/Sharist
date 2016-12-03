@@ -14,7 +14,7 @@ public:
     Q_PROPERTY(int total READ getTotal WRITE setTotal NOTIFY newTotalChanged)
     int getTotal();
     ExpenseNewView(QObject* parent = 0);
-    void Show(QObject *model);
+    void Show(const shared_ptr<QObject> &model);
     SelectableListViewModel* getOwnerModel();
     SelectableListViewModel* getPaidModel();
     void setTotal(const int &val);
@@ -24,7 +24,7 @@ signals:
     void paidModelChanged();
 private:
     int _total;
-    SharedEventModel* _sharedEvent;
+    SharedEventModelPtr _sharedEvent;
     SelectableListViewModelPtr _ownerModel;
     SelectableListViewModelPtr _paidModel;
 };

@@ -18,7 +18,7 @@ SharedEventListModel* SharedEventListView::getEventsList(){
 
 void SharedEventListView::NavigateToDetails(const int &selected){
     SharedEventModelPtr modelPtr = _events.get()->getModel(selected);
-    emit Navigate("DetailsEventView",modelPtr.get());
+    emit Navigate("DetailsEventView",modelPtr);
 }
 
 void SharedEventListView::NavigateToNew(){

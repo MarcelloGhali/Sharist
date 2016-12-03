@@ -21,7 +21,7 @@ public:
     void Start();
 public slots:
     void Navigate(const string &viewName);
-    void Navigate(const string &viewName, QObject* params);
+    void Navigate(const string &viewName, const shared_ptr<QObject> &params, const bool &pop = false);
 };
 
 typedef std::shared_ptr<GuiManager> GuiManagerPtr;

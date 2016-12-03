@@ -9,3 +9,7 @@ ViewModel::ViewModel(const QUrl &url, QObject *parent):
 QUrl ViewModel::GetUrl() const{
     return _url;
 }
+
+void ViewModel::NavigateBack(){
+    emit Navigate("Back");
+}

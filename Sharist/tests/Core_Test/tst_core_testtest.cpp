@@ -27,6 +27,7 @@ void Core_Test::sharedevent_should_expand_if_new_members_added(){
     vector<MemberPtr> maratMembers;
     maratMembers.push_back(alexP);
     maratMembers.push_back(slavaP);
+    maratMembers.push_back(maratP);
     ExpenseItemPtr gasP(new ExpenseItem(100, maratP, vector<MemberPtr>(), maratMembers));
     SharedEvent oregon("oregon");
     oregon.AddMember(maratP);
@@ -36,8 +37,7 @@ void Core_Test::sharedevent_should_expand_if_new_members_added(){
     vector<double> r1(oregon.Optimize());
     int countResults = r1.size();
     //adding new users
-    int currentSize = std::sqrt(countResults);
-    int newSize = std::sqrt(countResults) + 1;
+    int newSize = std::sqrt(countResults)*2;
     for (int i = 0; i < 5; i++){
         MemberPtr tmpMember(new Member("test"));
         oregon.AddMember(tmpMember);
@@ -45,7 +45,7 @@ void Core_Test::sharedevent_should_expand_if_new_members_added(){
     //check
     vector<double> r2(oregon.Optimize());
     int newCountResults = r2.size();
-    QVERIFY(countResults==newSize*newSize);
+    QVERIFY(newCountResults==newSize*newSize);
 }
 
 void Core_Test::sharedevent_should_return_correct_optimization(){

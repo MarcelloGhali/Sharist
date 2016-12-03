@@ -6,11 +6,11 @@ SharedEventDetailsView::SharedEventDetailsView(QObject *parent):
 }
 
 SharedEventModel* SharedEventDetailsView::getEventModel(){
-    return _eventModel;
+    return _eventModel.get();
 }
 
-void SharedEventDetailsView::Show(QObject *model){
-    _eventModel = qobject_cast<SharedEventModel*>(model);
+void SharedEventDetailsView::Show(const shared_ptr<QObject> &model){
+    _eventModel = dynamic_pointer_cast<SharedEventModel>(model);
 }
 
 void SharedEventDetailsView::AddMember(){

@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.1
 import Sharist.Models 1.0
 
 Item{
-    width: 320
-    height: 400
+//    width: 320
+//    height: 400
     property SharedEventDetailsView viewmodel : viewmodelDetailsEventView
     Column{
         spacing: 10
@@ -41,9 +41,7 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-//                    if (navigator){
-//                        navigator.pop()
-//                    }
+                    viewmodel.NavigateBack();
                 }
             }
             Button{
@@ -51,9 +49,6 @@ Item{
                 text: "Add expense"
                 onClicked: {
                     viewmodel.AddExpense();
-//                    if (navigator)
-//                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
-//                        navigator.push({item:Qt.resolvedUrl("NewExpenseItem.qml")})
                 }
             }
             Button{
@@ -61,9 +56,6 @@ Item{
                 text: "Add member"
                 onClicked: {
                     viewmodel.AddMember();
-//                    if (navigator)
-//                        eventsModel.selectedSharedEvent.expenseList.createTempExpense();
-//                        navigator.push({item:Qt.resolvedUrl("NewMember.qml")})
                 }
             }
         }

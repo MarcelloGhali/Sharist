@@ -13,9 +13,9 @@ public:
     MemberNewView(QObject *parent = 0);
     QString getName();
     void setName(const QString &name);
-    void Show(QObject *model);
+    void Show(const shared_ptr<QObject> &model);
 private:
-    SharedEventModel* _eventPtr;
+    SharedEventModelPtr _eventPtr;
     QString _name;
 signals:
     void nameChanged();

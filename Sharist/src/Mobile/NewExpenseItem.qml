@@ -4,8 +4,8 @@ import Sharist.Models 1.0
 
 Item{
     id:newExpenseItem
-    width: 320
-    height: 400
+//    width: 320
+//    height: 400
     property ExpenseNewView viewmodel: viewmodelExpenseNewView
     Column {
         id: column1
@@ -27,6 +27,8 @@ Item{
             }
             Binding{target: viewmodel; property: "total"; value:totalTxt.text}
         }
+        //TODO: update a paid list, if owner has changed
+        //TODO: add a flag, if you just lended a money to a person
         Row {
             id: row2
             width: parent.width
@@ -68,9 +70,7 @@ Item{
                 id: backBtn
                 text: "Back"
                 onClicked: {
-//                    if (navigator){
-//                        navigator.pop()
-//                    }
+                    viewmodel.NavigateBack();
                 }
             }
             Button{
